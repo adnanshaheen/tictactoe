@@ -12,7 +12,7 @@ public:
 	CDeck(const CDeck& cDeck);
 	~CDeck();
 
-	CDeck& operator = (const CDeck& cDeck);
-	ostream& operator << (ostream& cOut);
+	CDeck&		operator = (const CDeck& cDeck);
+	ostream&	operator << (ostream& cOut);
 };
 

@@ -11,7 +11,10 @@ public:
 	CPlayer(const CPlayer& cPlayer);
 	~CPlayer();
 
-	CPlayer& operator = (const CPlayer& cPlayer);
-	ostream& operator << (ostream& cOut);
+	CPlayer&	operator = (const CPlayer& cPlayer);
+	ostream&	operator << (ostream& cOut);
+	bool		operator > (const CPlayer& cPlayer);
+	bool		operator < (const CPlayer& cPlayer);
+	bool		operator == (const CPlayer& cPlayer);
 };
 

@@ -8,6 +8,6 @@ public:
 	CTicTacToe(const CTicTacToe& cTicTacToe);
 	~CTicTacToe();
 
-	CTicTacToe& operator =(const CTicTacToe& cTicTacToe);
+	CTicTacToe& operator = (const CTicTacToe& cTicTacToe);
 };
 
