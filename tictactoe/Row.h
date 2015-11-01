@@ -30,14 +30,17 @@ public:
 
 	void					Display() const;						// display data
 
+	void					CopyData(const CRow& cRow);				// copy data
+
 private:
 	void					InitRow();								// initialize memory
 	void					ReleaseRow();							// free memory
-	void					CopyData(const CRow& cRow);				// copy data
 	void					Display(ostream& cOut) const;			// display the data
 
+	inline bool				IsValid() const;						// check for valid pointer
+
 private:
-	unsigned int m_uSize;											// number of items in one row
+	unsigned int m_uCols;											// number of items in one row
 	int* m_pRow;													// row of board
 };
 

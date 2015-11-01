@@ -1,11 +1,11 @@
 
 #include "Row.h"
 
-CRow::CRow() : m_pRow(NULL), m_uSize(0)
+CRow::CRow() : m_pRow(NULL), m_uCols(0)
 {
 }
 
-CRow::CRow(unsigned int uSize) : m_uSize(uSize)
+CRow::CRow(unsigned int uSize) : m_uCols(uSize)
 {
 	InitRow();
 }
@@ -46,6 +46,7 @@ CRow& CRow::operator = (const CRow& cRow)
 			CopyData(cRow);
 		}
 	}
+	return *this;
 }
 
 inline int* CRow::GetRow() const
@@ -60,22 +61,22 @@ inline void CRow::SetRow(int* const pRow)
 
 inline unsigned int CRow::GetSize() const
 {
-	return m_uSize;
+	return m_uCols;
 }
 
 inline void CRow::SetSize(const unsigned int uSize)
 {
-	m_uSize = uSize;
+	m_uCols = uSize;
 }
 
 inline int CRow::GetAt(const unsigned int uIndex) const
 {
-	return m_pRow != NULL && uIndex < GetSize() ? m_pRow[uIndex] : -1;
+	return IsValid() && uIndex < GetSize() ? m_pRow[uIndex] : -1;
 }
 
 void CRow::SetAt(const unsigned int uIndex, const int nValue)
 {
-	if (m_pRow != NULL && uIndex < GetSize())
+	if (IsValid() && uIndex < GetSize())
 		m_pRow[uIndex] = nValue;
 }
 
@@ -87,12 +88,12 @@ void CRow::Display() const
 void CRow::InitRow()
 {
 	ReleaseRow();
-	m_pRow = new int [m_uSize];
+	m_pRow = new int [m_uCols];
 }
 
 void CRow::ReleaseRow()
 {
-	if (m_pRow != NULL) {
+	if (IsValid()) {
 		delete []m_pRow;
 		m_pRow = NULL;
 	}
@@ -100,7 +101,7 @@ void CRow::ReleaseRow()
 
 void CRow::CopyData(const CRow& cRow)
 {
-	if (m_pRow != NULL && GetSize() == cRow.GetSize()) {
+	if (IsValid() && GetSize() == cRow.GetSize()) {
 		for (int nIndex = 0; nIndex < GetSize(); ++ nIndex)
 			m_pRow[nIndex] = cRow.GetAt(nIndex);
 	}
@@ -112,4 +113,9 @@ void CRow::Display(ostream& cOut) const
 	for (int nIndex = 0; nIndex < GetSize(); ++ nIndex)
 		cOut << "{ " << GetAt(nIndex) << "} | ";
 	cOut << endl;
+}
+
+inline bool CRow::IsValid() const
+{
+	return m_pRow != NULL ? true : false;
 }
