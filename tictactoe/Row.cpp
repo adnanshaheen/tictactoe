@@ -25,7 +25,7 @@ CRow::~CRow()
 	ReleaseRow();
 }
 
-ostream& CRow::operator << (ostream& cOut)
+ostream& CRow::operator << (ostream& cOut) const
 {
 	Display(cOut);
 	return cOut;

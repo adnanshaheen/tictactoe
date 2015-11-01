@@ -26,7 +26,7 @@ CBoard::~CBoard()
 	Release();
 }
 
-ostream& CBoard::operator << (ostream& cOut)
+ostream& CBoard::operator << (ostream& cOut) const
 {
 	Display(cOut);
 	return cOut;

@@ -12,7 +12,7 @@ public:
 	~CBoard();
 
 	/* overloading operator */
-	ostream&				operator << (ostream& cOut);			// extraction operator
+	ostream&				operator << (ostream& cOut) const;		// extraction operator
 	CRow*					operator [] (unsigned int nIndex);		// index operator
 	CBoard&					operator = (const CBoard& cBoard);		// assignment operator
 

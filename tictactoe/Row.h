@@ -13,7 +13,7 @@ public:
 	~CRow();														// destructor
 
 	/* overloading operator */
-	ostream&				operator << (ostream& cOut);			// extraction operator
+	ostream&				operator << (ostream& cOut) const;		// extraction operator
 	int						operator [] (unsigned int nIndex);		// index operator
 	CRow&					operator = (const CRow& cRow);			// assignment operator
 
