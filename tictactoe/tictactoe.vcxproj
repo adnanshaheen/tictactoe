@@ -82,6 +82,7 @@
     <ClInclude Include="Deck.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Row.h" />
+    <ClInclude Include="Stats.h" />
     <ClInclude Include="TicTacToe.h" />
   </ItemGroup>
   <ItemGroup>
@@ -90,6 +91,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Row.cpp" />
+    <ClCompile Include="Stats.cpp" />
     <ClCompile Include="TicTacToe.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
