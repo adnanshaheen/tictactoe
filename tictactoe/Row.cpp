@@ -25,12 +25,6 @@ CRow::~CRow()
 	ReleaseRow();
 }
 
-ostream& CRow::operator << (ostream& cOut) const
-{
-	Display(cOut);
-	return cOut;
-}
-
 int CRow::operator [] (unsigned int nIndex)
 {
 	return GetAt(nIndex);
@@ -102,7 +96,9 @@ void CRow::ReleaseRow()
 void CRow::CopyData(const CRow& cRow)
 {
 	if (IsValid() && GetSize() == cRow.GetSize()) {
+#pragma warning(disable: 4018)
 		for (int nIndex = 0; nIndex < GetSize(); ++ nIndex)
+#pragma warning(default : 4018)
 			m_pRow[nIndex] = cRow.GetAt(nIndex);
 	}
 }
@@ -110,7 +106,9 @@ void CRow::CopyData(const CRow& cRow)
 void CRow::Display(ostream& cOut) const
 {
 	cOut << "| ";
+#pragma warning(disable: 4018)
 	for (int nIndex = 0; nIndex < GetSize(); ++ nIndex)
+#pragma warning(default: 4018)
 		cOut << "{ " << GetAt(nIndex) << "} | ";
 	cOut << endl;
 }
@@ -118,4 +116,10 @@ void CRow::Display(ostream& cOut) const
 inline bool CRow::IsValid() const
 {
 	return m_pRow != NULL ? true : false;
+}
+
+ostream& operator << (ostream& cOut, const CRow& cRow)
+{
+	cRow.Display(cOut);
+	return cOut;
 }

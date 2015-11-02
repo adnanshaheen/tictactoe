@@ -26,12 +26,6 @@ CBoard::~CBoard()
 	Release();
 }
 
-ostream& CBoard::operator << (ostream& cOut) const
-{
-	Display(cOut);
-	return cOut;
-}
-
 CRow* CBoard::operator [] (unsigned int nIndex)
 {
 	return GetAt(nIndex);
@@ -139,4 +133,10 @@ void CBoard::CopyData(const CBoard& cBoard)
 {
 	for (int nIndex = 0; nIndex < cBoard.GetRows(); ++ nIndex)
 		GetAt(nIndex)->CopyData(*cBoard.GetAt(nIndex));
+}
+
+ostream& operator << (ostream& cOut, const CBoard& cBoard)
+{
+	cBoard.Display(cOut);
+	return cOut;
 }

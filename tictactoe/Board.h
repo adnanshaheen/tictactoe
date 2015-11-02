@@ -1,6 +1,9 @@
 
 #pragma once
 
+#include <iostream>
+using namespace std;
+
 class CRow;
 
 class CBoard
@@ -12,7 +15,8 @@ public:
 	~CBoard();
 
 	/* overloading operator */
-	ostream&				operator << (ostream& cOut) const;		// extraction operator
+	friend ostream&			operator << (ostream& cOut,
+										const CBoard& cBoard);		// extraction operator
 	CRow*					operator [] (unsigned int nIndex);		// index operator
 	CBoard&					operator = (const CBoard& cBoard);		// assignment operator
 
