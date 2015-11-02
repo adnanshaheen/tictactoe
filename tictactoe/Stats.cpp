@@ -30,6 +30,7 @@ CStats& CStats::operator = (const CStats cStats)
 		SetLosses(cStats.GetLosses());
 		SetTies(cStats.GetTies());
 	}
+	return *this;
 }
 
 ostream& CStats::operator << (ostream& cOut) const
@@ -77,5 +78,5 @@ void CStats::Display(ostream& cOut) const
 {
 	cOut << "Wins   :) : " << GetWins() << endl;
 	cOut << "Losses :( : " << GetLosses() << endl;
-	cOut << "Ties   :\ : " << GetTies() << endl;
+	cOut << "Ties   :'\' : " << GetTies() << endl;
 }
