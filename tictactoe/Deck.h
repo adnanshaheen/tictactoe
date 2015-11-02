@@ -3,22 +3,39 @@
 
 
 #include <iostream>
+#include <vector>
 #include "Board.h"
 
 using namespace std;
 
+typedef vector<int> PLAYER_CHOICES;
+typedef PLAYER_CHOICES::iterator PLAYER_ITER;
+typedef PLAYER_CHOICES::const_iterator PLAYER_CITER;
+
 class CDeck
 {
 public:
-	CDeck();
-	CDeck(const CDeck& cDeck);
-	~CDeck();
+	/* constructor/destructor */
+	CDeck();														// constructor
+	CDeck(const CDeck& cDeck);										// copy constructor
+	~CDeck();														// destructor
 
-	CDeck&		operator = (const CDeck& cDeck);
-	ostream&	operator << (ostream& cOut) const;
+	/* operator overloading */
+	CDeck&			operator = (const CDeck& cDeck);				// assignment operator
+	friend ostream&	operator << (ostream& cOut,
+								const CDeck& cDeck);				// extraction operator
+
+	/* methods */
+	void		Display() const;									// display
+
+	void		InsertChoice(bool bSymbol, unsigned int nIndex);	// insert choice
 
 private:
-	CBoard m_cBoard;
-	const int m_nBoardSize = 3;
-};
+	void		Display(ostream& cOut) const;						// display
 
+private:
+	CBoard m_cBoard;												// board
+	const int m_nBoardSize;											// board size
+	PLAYER_CHOICES m_cPlayerOChoice;								// player one choices
+	PLAYER_CHOICES m_cPlayerXChoice;								// player two choices
+};
