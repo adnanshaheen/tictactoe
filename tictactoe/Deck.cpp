@@ -5,14 +5,21 @@ CDeck::CDeck() : m_nBoardSize(3)
 {
 	m_cBoard.SetRows(m_nBoardSize);
 	m_cBoard.SetCols(m_nBoardSize);
+	m_cPlayerOChoice.clear();
+	m_cPlayerXChoice.clear();
 }
 
 CDeck::~CDeck()
 {
+	m_cPlayerOChoice.clear();
+	m_cPlayerXChoice.clear();
 }
 
 CDeck::CDeck(const CDeck& cDeck) : m_nBoardSize(3)
 {
+	m_cBoard = cDeck.m_cBoard;
+	m_cPlayerOChoice = cDeck.m_cPlayerOChoice;
+	m_cPlayerXChoice = cDeck.m_cPlayerXChoice;
 }
 
 CDeck& CDeck::operator = (const CDeck& cDeck)
