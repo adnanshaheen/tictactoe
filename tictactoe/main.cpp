@@ -2,7 +2,10 @@
 #include <iostream>
 using namespace std;
 
+#include "TicTacToe.h"
+
 int main()
 {
-	return 0;
+	CTicTacToe cTicTacToe;
+	return cTicTacToe.StartGame();
 }
