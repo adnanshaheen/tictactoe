@@ -43,6 +43,7 @@ private:
 	void GetPlayerMove();
 
 private:
+	bool m_bSymbolX;
 	CPlayer* m_pPlayerOne;
 	CPlayer* m_pPlayerTwo;
 };
