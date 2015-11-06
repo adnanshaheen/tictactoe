@@ -33,42 +33,6 @@ CStats& CStats::operator = (const CStats cStats)
 	return *this;
 }
 
-ostream& CStats::operator << (ostream& cOut) const
-{
-	Display(cOut);
-	return cOut;
-}
-
-inline int CStats::GetWins() const
-{
-	return m_uWin;
-}
-
-inline void CStats::SetWins(const unsigned int uWin/* = 1*/)
-{
-	m_uWin += uWin;
-}
-
-inline int CStats::GetLosses() const
-{
-	return m_uLoss;
-}
-
-inline void CStats::SetLosses(const unsigned int uLoss/* = 1*/)
-{
-	m_uLoss += uLoss;
-}
-
-inline int CStats::GetTies() const
-{
-	return m_uTie;
-}
-
-inline void CStats::SetTies(const unsigned int uTies/* = 1*/)
-{
-	m_uTie += uTies;
-}
-
 void CStats::Display() const
 {
 	Display(cout);
@@ -78,5 +42,11 @@ void CStats::Display(ostream& cOut) const
 {
 	cOut << "Wins   :) : " << GetWins() << endl;
 	cOut << "Losses :( : " << GetLosses() << endl;
-	cOut << "Ties   :'\' : " << GetTies() << endl;
+	cOut << "Ties   :\\ : " << GetTies() << endl;
+}
+
+ostream& operator << (ostream& cOut, const CStats& cStats)
+{
+	cStats.Display(cOut);
+	return cOut;
 }

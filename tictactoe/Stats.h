@@ -15,19 +15,47 @@ public:
 
 	/* operator overloading */
 	CStats& operator = (const CStats cStats);					// assignment operator
-	ostream& operator << (ostream& cOut) const;					// extraction operator
+	friend ostream& operator << (ostream& cOut,
+								const CStats& cStats);			// extraction operator
 
 	/* methods */
-	inline int GetWins() const;									// get number of wins
-	inline void SetWins(const unsigned int uWin = 1);			// set wins
-
-	inline int GetLosses() const;								// get number of losses
-	inline void SetLosses(const unsigned int uLoss = 1);		// set losses
-
-	inline int GetTies() const;									// get number of ties
-	inline void SetTies(const unsigned int uTies = 1);			// set ties
-
 	void Display() const;										// display
+
+	/* inline functions */
+	// get number of wins
+	inline int GetWins() const
+	{
+		return m_uWin;
+	}
+
+	// set wins
+	inline void SetWins(const unsigned int uWin = 1)// set wins
+	{
+		m_uWin += uWin;
+	}
+
+	// get number of losses
+	inline int GetLosses() const
+	{
+		return m_uLoss;
+	}
+
+	inline void SetLosses(const unsigned int uLoss = 1)
+	{
+		m_uLoss += uLoss;
+	}
+
+	// get number of ties
+	inline int GetTies() const
+	{
+		return m_uTie;
+	}
+
+	// set ties
+	inline void SetTies(const unsigned int uTies = 1)
+	{
+		m_uTie += uTies;
+	}
 
 private:
 	void Display(ostream& cOut) const;							// display

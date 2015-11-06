@@ -16,38 +16,77 @@ public:
 
 	/* overloading operator */
 	friend ostream&			operator << (ostream& cOut,
-										const CBoard& cBoard);		// extraction operator
-	CRow*					operator [] (unsigned int nIndex);		// index operator
-	CBoard&					operator = (const CBoard& cBoard);		// assignment operator
+										const CBoard& cBoard);	// extraction operator
+	CRow*					operator [] (unsigned int nIndex);	// index operator
+	CBoard&					operator = (const CBoard& cBoard);	// assignment operator
 
 	/* methods */
-	inline int				GetRows() const;						// get rows
-	inline void				SetRows(const unsigned int uRows);		// set rows
+	void					Display() const;					// display data
 
-	inline int				GetCols() const;						// get cols
-	inline void				SetCols(const unsigned int uCols);		// set cols
+	/* inline functions */
+	// get rows
+	inline int GetRows() const
+	{
+		return m_uRows;
+	}
 
-	inline CRow*			GetAt(const unsigned int uRow) const;	// get item at index
-	inline void				SetAt(const unsigned int uRow,
-								CRow* const pRow);					// set item at index
+	// set rows
+	inline void SetRows(const unsigned int uRows)
+	{
+		m_uRows = uRows;
+	}
 
-	inline int				GetAt(const unsigned int uRow,
-								const unsigned int uCol) const;		// get item at index row's column
-	inline void				SetAt(const unsigned int uRow,
-								const unsigned int uCol,
-								const int nValue);					// set value at index row's column
+	// get cols
+	inline int GetCols() const
+	{
+		return m_uCols;
+	}
 
-	void					Display() const;						// display data
+	// set cols
+	inline void SetCols(const unsigned int uCols)
+	{
+		m_uCols = uCols;
+	}
+
+	// get item at index
+	inline CRow* GetAt(const unsigned int uRow) const
+	{
+		return IsValid() ? m_ppRow[uRow] : NULL;
+	}
+
+	// set item at index
+	inline void SetAt(const unsigned int uRow, CRow* const pRow)
+	{
+		if (IsValid())
+			m_ppRow[uRow] = pRow;
+	}
+
+	int GetAt(const unsigned int uRow,
+		const unsigned int uCol) const;								// get item at index row's column
+
+	void SetAt(const unsigned int uRow,
+		const unsigned int uCol,
+		const int nValue);											// set value at index row's column
 
 private:
 	void					Init();									// initialize memory
 	void					Release();								// free memory
 	void					Display(ostream& cOut) const;			// display the data
 
-	inline bool				IsValid() const;						// check for valid pointer
-	inline bool				IsValid(const unsigned int uRow) const;	// check for index valid pointer
-
 	void					CopyData(const CBoard& cBoard);			// copy the data
+	void					InitData();								// initialize data
+
+	// check for valid pointer
+	inline bool IsValid() const
+	{
+		return m_ppRow != NULL ? true : false;
+	}
+
+	// check for index valid pointer
+	inline bool IsValid(const unsigned int uRow) const
+	{
+		return IsValid() && m_ppRow[uRow] != NULL ? true : false;
+	}
 
 private:
 	unsigned int m_uRows;											// number of rows

@@ -9,6 +9,7 @@ CBoard::CBoard() : m_ppRow(NULL), m_uRows(0), m_uCols(0)
 CBoard::CBoard(unsigned int uRows, unsigned int uCols) : m_uRows(uRows), m_uCols(uCols)
 {
 	Init();
+	InitData();
 }
 
 CBoard::CBoard(const CBoard& cBoard)
@@ -44,48 +45,6 @@ CBoard& CBoard::operator = (const CBoard& cBoard)
 	return *this;
 }
 
-inline int CBoard::GetRows() const
-{
-	return m_uRows;
-}
-
-inline void CBoard::SetRows(const unsigned int uRows)
-{
-	m_uRows = uRows;
-}
-
-inline int CBoard::GetCols() const
-{
-	return m_uCols;
-}
-
-inline void CBoard::SetCols(const unsigned int uCols)
-{
-	m_uCols = uCols;
-}
-
-inline CRow* CBoard::GetAt(const unsigned int uRow) const
-{
-	return IsValid() ? m_ppRow[uRow] : NULL;
-}
-
-inline void CBoard::SetAt(const unsigned int uRow, CRow* const pRow)
-{
-	if (IsValid())
-		m_ppRow[uRow] = pRow;
-}
-
-inline int CBoard::GetAt(const unsigned int uRow, const unsigned int uCol) const
-{
-	return IsValid(uRow) ? m_ppRow[uRow]->GetAt(uCol) : -1;
-}
-
-inline void CBoard::SetAt(const unsigned int uRow, const unsigned int uCol, const int nValue)
-{
-	if (IsValid(uRow))
-		m_ppRow[uRow]->SetAt(uCol, nValue);
-}
-
 void CBoard::Display() const
 {
 	Display(cout);
@@ -104,7 +63,7 @@ void CBoard::Release()
 	if (IsValid()) {
 		for (int nIndex = 0; nIndex < GetRows(); ++ nIndex) {
 			if (IsValid(nIndex))
-				delete[] m_ppRow[nIndex];
+				delete m_ppRow[nIndex];
 		}
 		delete[] m_ppRow;
 	}
@@ -112,27 +71,41 @@ void CBoard::Release()
 
 void CBoard::Display(ostream& cOut) const
 {
-	// FIXME: print messages missing for board
+	cOut << " -----------------" << endl;
 	for (int nIndex = 0; nIndex < GetRows(); ++ nIndex) {
-		if (IsValid(nIndex))
-			cOut << m_ppRow[nIndex];
+		if (IsValid(nIndex)) {
+			cOut << "|     |     |     |" << endl;
+			cOut << *m_ppRow[nIndex];
+			cOut << "|     |     |     |" << endl;
+			cOut << " -----------------" << endl;
+		}
 	}
 }
 
-inline bool CBoard::IsValid() const
+int CBoard::GetAt(const unsigned int uRow, const unsigned int uCol) const
 {
-	return m_ppRow != NULL ? true : false;
+	return IsValid(uRow) ? m_ppRow[uRow]->GetAt(uCol) : -1;
 }
 
-inline bool CBoard::IsValid(const unsigned int uRow) const
+void CBoard::SetAt(const unsigned int uRow, const unsigned int uCol, const int nValue)
 {
-	return IsValid() && m_ppRow[uRow] != NULL ? true : false;
+	if (IsValid(uRow))
+		m_ppRow[uRow]->SetAt(uCol, nValue);
 }
 
 void CBoard::CopyData(const CBoard& cBoard)
 {
 	for (int nIndex = 0; nIndex < cBoard.GetRows(); ++ nIndex)
 		GetAt(nIndex)->CopyData(*cBoard.GetAt(nIndex));
+}
+
+
+void CBoard::InitData()
+{
+	int nIndex = 0;
+	for (int uRow = 0; uRow < GetRows(); ++ uRow)
+		for (int uCol = 0; uCol < GetCols(); ++ uCol)
+			SetAt(uRow, uCol, nIndex ++);
 }
 
 ostream& operator << (ostream& cOut, const CBoard& cBoard)
