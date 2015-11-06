@@ -3,21 +3,24 @@
 
 CDeck::CDeck() : m_nBoardSize(3)
 {
-	m_cBoard.SetRows(m_nBoardSize);
-	m_cBoard.SetCols(m_nBoardSize);
+	m_pBoard = new CBoard(m_nBoardSize, m_nBoardSize);
 	m_cPlayerOChoice.clear();
 	m_cPlayerXChoice.clear();
 }
 
 CDeck::~CDeck()
 {
+	if (m_pBoard) {
+		delete m_pBoard;
+		m_pBoard = NULL;
+	}
 	m_cPlayerOChoice.clear();
 	m_cPlayerXChoice.clear();
 }
 
 CDeck::CDeck(const CDeck& cDeck) : m_nBoardSize(3)
 {
-	m_cBoard = cDeck.m_cBoard;
+	m_pBoard = cDeck.m_pBoard;
 	m_cPlayerOChoice = cDeck.m_cPlayerOChoice;
 	m_cPlayerXChoice = cDeck.m_cPlayerXChoice;
 }
@@ -25,7 +28,7 @@ CDeck::CDeck(const CDeck& cDeck) : m_nBoardSize(3)
 CDeck& CDeck::operator = (const CDeck& cDeck)
 {
 	if (this != &cDeck) {
-		m_cBoard = cDeck.m_cBoard;
+		m_pBoard = cDeck.m_pBoard;
 		m_cPlayerOChoice = cDeck.m_cPlayerOChoice;
 		m_cPlayerXChoice = cDeck.m_cPlayerXChoice;
 	}
@@ -40,7 +43,7 @@ void CDeck::Display() const
 
 void CDeck::Display(ostream& cOut) const
 {
-	cOut << m_cBoard << endl;
+	cOut << *m_pBoard << endl;
 }
 
 void CDeck::InsertChoice(bool bSymbolX, unsigned int nIndex)

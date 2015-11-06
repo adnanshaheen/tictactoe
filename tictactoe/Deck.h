@@ -34,7 +34,7 @@ private:
 	void		Display(ostream& cOut) const;						// display
 
 private:
-	CBoard m_cBoard;												// board
+	CBoard* m_pBoard;												// board
 	const int m_nBoardSize;											// board size
 	PLAYER_CHOICES m_cPlayerOChoice;								// player one choices
 	PLAYER_CHOICES m_cPlayerXChoice;								// player two choices
