@@ -23,6 +23,15 @@ public:
 	/* methods */
 	void					Display() const;					// display data
 
+	void					InitData();							// initialize data
+
+	int GetAt(const unsigned int uRow,
+		const unsigned int uCol) const;							// get item at index row's column
+
+	void SetAt(const unsigned int uRow,
+		const unsigned int uCol,
+		const int nValue);										// set value at index row's column
+
 	/* inline functions */
 	// get rows
 	inline int GetRows() const
@@ -61,20 +70,12 @@ public:
 			m_ppRow[uRow] = pRow;
 	}
 
-	int GetAt(const unsigned int uRow,
-		const unsigned int uCol) const;								// get item at index row's column
-
-	void SetAt(const unsigned int uRow,
-		const unsigned int uCol,
-		const int nValue);											// set value at index row's column
-
 private:
-	void					Init();									// initialize memory
-	void					Release();								// free memory
-	void					Display(ostream& cOut) const;			// display the data
+	void					Init();								 // initialize memory
+	void					Release();							 // free memory
+	void					Display(ostream& cOut) const;		 // display the data
 
-	void					CopyData(const CBoard& cBoard);			// copy the data
-	void					InitData();								// initialize data
+	void					CopyData(const CBoard& cBoard);		 // copy the data
 
 	// check for valid pointer
 	inline bool IsValid() const
@@ -89,8 +90,8 @@ private:
 	}
 
 private:
-	unsigned int m_uRows;											// number of rows
-	unsigned int m_uCols;											// number of cols
-	CRow** m_ppRow;													// rows
+	unsigned int m_uRows;										 // number of rows
+	unsigned int m_uCols;										 // number of cols
+	CRow** m_ppRow;												 // rows
 };
 

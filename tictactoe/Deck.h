@@ -9,8 +9,6 @@
 using namespace std;
 
 typedef vector<int> PLAYER_CHOICES;
-typedef PLAYER_CHOICES::iterator PLAYER_ITER;
-typedef PLAYER_CHOICES::const_iterator PLAYER_CITER;
 
 class CDeck
 {
@@ -30,14 +28,21 @@ public:
 
 	void		InsertChoice(bool bSymbol, unsigned int nIndex);	// insert choice
 
-	void		ClearChoices();										// clear the choices for another game
+	void		ClearBoard();										// clear the board for another game
 
 	int			GetBoardSize() const;								// get board size
 
 	bool		IsMoveAvailable(int nIndex) const;					// check if move is already done
 
+	bool		PlayerXWins() const;								// Player with symbol X wins game?
+	bool		PlayerOWins() const;								// Player with symbol O wins game?
+
+	bool		IsGameOver() const;									// Is game over?
+
 private:
 	void		Display(ostream& cOut) const;						// display
+
+	void		ClearChoices();										// clear player choices
 
 private:
 	CBoard* m_pBoard;												// board

@@ -56,6 +56,12 @@ void CDeck::InsertChoice(bool bSymbolX, unsigned int nIndex)
 		m_cPlayerOChoice.push_back(nIndex);
 }
 
+void CDeck::ClearBoard()
+{
+	ClearChoices();
+	m_pBoard->InitData();
+}
+
 void CDeck::ClearChoices()
 {
 	m_cPlayerOChoice.clear();
@@ -71,6 +77,89 @@ bool CDeck::IsMoveAvailable(int nIndex) const
 {
 	return find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), nIndex) == m_cPlayerOChoice.end() &&
 		find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), nIndex) == m_cPlayerXChoice.end();
+}
+
+bool CDeck::PlayerXWins() const
+{
+	bool bRes = false;
+	if ((find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 0) != m_cPlayerXChoice.end() &&
+		find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 1) != m_cPlayerXChoice.end() &&
+		find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 2) != m_cPlayerXChoice.end()) ||
+
+		(find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 0) != m_cPlayerXChoice.end() &&
+		find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 3) != m_cPlayerXChoice.end() &&
+		find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 6) != m_cPlayerXChoice.end()) ||
+
+		(find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 0) != m_cPlayerXChoice.end() &&
+		find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 4) != m_cPlayerXChoice.end() &&
+		find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 8) != m_cPlayerXChoice.end()) ||
+
+		(find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 1) != m_cPlayerXChoice.end() &&
+		find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 4) != m_cPlayerXChoice.end() &&
+		find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 7) != m_cPlayerXChoice.end()) ||
+
+		(find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 2) != m_cPlayerXChoice.end() &&
+		find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 5) != m_cPlayerXChoice.end() &&
+		find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 8) != m_cPlayerXChoice.end()) ||
+
+		(find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 3) != m_cPlayerXChoice.end() &&
+		find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 4) != m_cPlayerXChoice.end() &&
+		find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 5) != m_cPlayerXChoice.end()) ||
+
+		(find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 6) != m_cPlayerXChoice.end() &&
+		find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 7) != m_cPlayerXChoice.end() &&
+		find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 8) != m_cPlayerXChoice.end()) ||
+
+		(find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 2) != m_cPlayerXChoice.end() &&
+		find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 4) != m_cPlayerXChoice.end() &&
+		find(m_cPlayerXChoice.begin(), m_cPlayerXChoice.end(), 6) != m_cPlayerXChoice.end()))
+		bRes = true;
+
+	return bRes;
+}
+
+bool CDeck::PlayerOWins() const
+{
+	bool bRes = false;
+	if ((find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 0) != m_cPlayerOChoice.end() &&
+		find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 1) != m_cPlayerOChoice.end() &&
+		find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 2) != m_cPlayerOChoice.end()) ||
+
+		(find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 0) != m_cPlayerOChoice.end() &&
+		find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 3) != m_cPlayerOChoice.end() &&
+		find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 6) != m_cPlayerOChoice.end()) ||
+
+		(find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 0) != m_cPlayerOChoice.end() &&
+		find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 4) != m_cPlayerOChoice.end() &&
+		find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 8) != m_cPlayerOChoice.end()) ||
+
+		(find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 1) != m_cPlayerOChoice.end() &&
+		find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 4) != m_cPlayerOChoice.end() &&
+		find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 7) != m_cPlayerOChoice.end()) ||
+
+		(find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 2) != m_cPlayerOChoice.end() &&
+		find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 5) != m_cPlayerOChoice.end() &&
+		find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 8) != m_cPlayerOChoice.end()) ||
+
+		(find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 3) != m_cPlayerOChoice.end() &&
+		find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 4) != m_cPlayerOChoice.end() &&
+		find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 5) != m_cPlayerOChoice.end()) ||
+
+		(find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 6) != m_cPlayerOChoice.end() &&
+		find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 7) != m_cPlayerOChoice.end() &&
+		find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 8) != m_cPlayerOChoice.end()) ||
+
+		(find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 2) != m_cPlayerOChoice.end() &&
+		find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 4) != m_cPlayerOChoice.end() &&
+		find(m_cPlayerOChoice.begin(), m_cPlayerOChoice.end(), 6) != m_cPlayerOChoice.end()))
+		bRes = true;
+
+	return bRes;
+}
+
+bool CDeck::IsGameOver() const
+{
+	return m_cPlayerXChoice.size() + m_cPlayerOChoice.size() == GetBoardSize() - 1;
 }
 
 ostream& operator << (ostream& cOut, const CDeck& cDeck)

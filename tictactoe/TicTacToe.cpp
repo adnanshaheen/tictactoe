@@ -71,6 +71,29 @@ void CTicTacToe::Display() const
 
 void CTicTacToe::Input(istream& cIn)
 {
+	int nIndex = -1;
+	string csName;
+	if (m_bXO) {
+		csName = m_pPlayerOne->IsSymbolX() ?
+			m_pPlayerOne->GetPlayerName() : m_pPlayerTwo->GetPlayerName();
+	}
+	else {
+		csName = m_pPlayerOne->IsSymbolO() ?
+			m_pPlayerOne->GetPlayerName() : m_pPlayerTwo->GetPlayerName();
+	}
+
+	cout << csName << " enter your move ";
+	while (true) {
+		cIn >> nIndex;
+		if (!ValidateInput(cIn, nIndex))
+			continue;
+
+		if (!IsValidMove(nIndex))
+			cout << "Invalid move ..." << endl;
+		else
+			break;
+	}
+	m_pDeck->InsertChoice(m_bXO, nIndex);
 }
 
 void CTicTacToe::Display(ostream& cOut) const
@@ -99,7 +122,13 @@ int CTicTacToe::StartGame()
 	int res = 0;
 	bool bSamePlayer = false;
 	char ch = 'Y';
+	CPlayer* pWinner = NULL;
+	CPlayer* pLooser = NULL;
+
 	while (ch != 'q') {
+
+		pWinner = NULL;
+		pLooser = NULL;
 
 		if (!bSamePlayer) {
 			cout << "Player 1 name: ";
@@ -108,6 +137,7 @@ int CTicTacToe::StartGame()
 		m_pPlayerOne->SetSymbol(m_bSymbolX);
 		cout << *m_pPlayerOne;
 
+		m_bXO = true;
 		m_bSymbolX = !m_bSymbolX;				// change the symbol for next player, and game
 
 		if (!bSamePlayer) {
@@ -117,20 +147,42 @@ int CTicTacToe::StartGame()
 		m_pPlayerTwo->SetSymbol(m_bSymbolX);
 		cout << *m_pPlayerTwo;
 
-		m_pDeck->ClearChoices();		// clear previous choices for new game
+		m_pDeck->ClearBoard();					// clear board for new game
 
 		cout << *m_pDeck;
 
 		cout << (m_pPlayerOne->IsSymbolX() ? m_pPlayerOne->GetPlayerName() : m_pPlayerTwo->GetPlayerName())
 			<< " to make the first move" << endl;
 
-		m_bXO = m_pPlayerOne->IsSymbolX() ? true : false;
-
 		while (!IsGameOver()) {
 			GetPlayerMove();
 
 			cout << *m_pDeck;
 		}
+
+		if (!IsDraw()) {
+			if (m_pDeck->PlayerXWins()) {
+				pWinner = m_pPlayerOne->IsSymbolX() ? m_pPlayerOne : m_pPlayerTwo;
+				pLooser = m_pPlayerOne->IsSymbolO() ? m_pPlayerOne : m_pPlayerTwo;
+			}
+			else if (m_pDeck->PlayerOWins()) {
+				pWinner = m_pPlayerOne->IsSymbolO() ? m_pPlayerOne : m_pPlayerTwo;
+				pLooser = m_pPlayerOne->IsSymbolX() ? m_pPlayerOne : m_pPlayerTwo;
+			}
+
+			cout << pWinner->GetPlayerName() << " Wins :)" << endl;
+
+			pWinner->SetWins();
+			pLooser->SetLosses();
+		}
+		else {
+			cout << "Game Draw :\\" << endl;
+			m_pPlayerOne->SetTies();
+			m_pPlayerTwo->SetTies();
+		}
+
+		cout << *pWinner;
+		cout << *pLooser;
 
 		cout << "Same players (press q to exit)? Y/N ";
 		cin >> ch;
@@ -142,35 +194,17 @@ int CTicTacToe::StartGame()
 
 bool CTicTacToe::IsDraw() const
 {
-	return false;
+	return !m_pDeck->PlayerXWins() && !m_pDeck->PlayerOWins();
 }
 
 bool CTicTacToe::IsGameOver() const
 {
-	return false;
+	return m_pDeck->IsGameOver() || m_pDeck->PlayerXWins() || m_pDeck->PlayerOWins();
 }
 
 void CTicTacToe::GetPlayerMove()
 {
-	int nIndex = -1;
-	string csName;
-	if (m_bXO && m_pPlayerOne->IsSymbolX())
-		csName = m_pPlayerOne->GetPlayerName();
-	else
-		csName = m_pPlayerTwo->GetPlayerName();
-
-	cout << csName << " enter your move ";
-	while (true) {
-		cin >> nIndex;
-		if (!ValidateInput(cin, nIndex))
-			continue;
-
-		if (!IsValidMove(nIndex))
-			cout << "Invalid move ..." << endl;
-		else
-			break;
-	}
-	m_pDeck->InsertChoice(m_bXO, nIndex);
+	cin >> *this;
 
 	// update player move
 	m_bXO  = !m_bXO;
