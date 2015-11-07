@@ -74,7 +74,7 @@ void CRow::Display(ostream& cOut) const
 {
 	cOut << "| ";
 	for (unsigned int nIndex = 0; nIndex < GetSize(); ++ nIndex)
-		cOut << "{" << GetAt(nIndex) << "} | ";
+		cOut << "{" << (char) GetAt(nIndex) << "} | ";
 	cOut << endl;
 }
 

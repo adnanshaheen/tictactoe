@@ -2,6 +2,7 @@
 #pragma once
 
 #include <iostream>
+#include "Deck.h"
 using namespace std;
 
 class CPlayer;
@@ -32,7 +33,7 @@ private:
 
 	void Display(ostream& cOut) const;
 
-	bool IsValidMove() const;
+	bool IsValidMove(int nIndex) const;
 
 	bool ValidateInput(istream& cIn, int nMove) const;
 
@@ -43,7 +44,9 @@ private:
 	void GetPlayerMove();
 
 private:
-	bool m_bSymbolX;
+	bool m_bXO;					// current symbol
+	bool m_bSymbolX;			// symbol for first player
+	CDeck* m_pDeck;
 	CPlayer* m_pPlayerOne;
 	CPlayer* m_pPlayerTwo;
 };

@@ -102,7 +102,7 @@ void CBoard::CopyData(const CBoard& cBoard)
 
 void CBoard::InitData()
 {
-	int nIndex = 0;
+	int nIndex = 48;		// initialize with ascii value of 0
 	for (int uRow = 0; uRow < GetRows(); ++ uRow)
 		for (int uCol = 0; uCol < GetCols(); ++ uCol)
 			SetAt(uRow, uCol, nIndex ++);

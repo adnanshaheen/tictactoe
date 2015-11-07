@@ -30,6 +30,12 @@ public:
 
 	void		InsertChoice(bool bSymbol, unsigned int nIndex);	// insert choice
 
+	void		ClearChoices();										// clear the choices for another game
+
+	int			GetBoardSize() const;								// get board size
+
+	bool		IsMoveAvailable(int nIndex) const;					// check if move is already done
+
 private:
 	void		Display(ostream& cOut) const;						// display
 
