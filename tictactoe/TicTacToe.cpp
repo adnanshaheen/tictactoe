@@ -4,6 +4,8 @@
 #include "TicTacToe.h"
 #include "Player.h"
 
+using namespace tictactoe;
+
 CTicTacToe::CTicTacToe() : m_bSymbolX(true), m_bXO(true)
 {
 	Init();
@@ -210,13 +212,13 @@ void CTicTacToe::GetPlayerMove()
 	m_bXO  = !m_bXO;
 }
 
-ostream& operator << (ostream& cOut, const CTicTacToe& cTicTacToe)
+ostream& tictactoe::operator << (ostream& cOut, const CTicTacToe& cTicTacToe)
 {
 	cTicTacToe.Display(cOut);
 	return cOut;
 }
 
-istream& operator >> (istream& cIn, CTicTacToe& cTicTacToe)
+istream& tictactoe::operator >> (istream& cIn, CTicTacToe& cTicTacToe)
 {
 	cTicTacToe.Input(cIn);
 	return cIn;

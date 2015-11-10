@@ -1,6 +1,8 @@
 
 #include "Stats.h"
 
+using namespace tictactoe;
+
 CStats::CStats() : m_uWin(0), m_uLoss(0), m_uTie(0)
 {
 }
@@ -45,7 +47,7 @@ void CStats::Display(ostream& cOut) const
 	cOut << "Ties   :\\ : " << GetTies() << endl;
 }
 
-ostream& operator << (ostream& cOut, const CStats& cStats)
+ostream& tictactoe::operator << (ostream& cOut, const CStats& cStats)
 {
 	cStats.Display(cOut);
 	return cOut;

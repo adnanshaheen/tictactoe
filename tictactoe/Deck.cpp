@@ -2,6 +2,8 @@
 #include <algorithm>
 #include "Deck.h"
 
+using namespace tictactoe;
+
 CDeck::CDeck() : m_nBoardSize(3)
 {
 	m_pBoard = new CBoard(m_nBoardSize, m_nBoardSize);
@@ -162,7 +164,7 @@ bool CDeck::IsGameOver() const
 	return m_cPlayerXChoice.size() + m_cPlayerOChoice.size() == GetBoardSize() - 1;
 }
 
-ostream& operator << (ostream& cOut, const CDeck& cDeck)
+ostream& tictactoe::operator << (ostream& cOut, const CDeck& cDeck)
 {
 	cDeck.Display(cOut);
 	return cOut;

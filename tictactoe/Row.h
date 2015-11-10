@@ -3,78 +3,80 @@
 #include <iostream>
 using namespace std;
 
-class CRow
-{
-public:
-	/* constructor/destructor */
-	CRow();															// constructor
-	CRow(unsigned int uSize);										// constructor
-	CRow(const CRow& cRow);											// copy constructor
-	~CRow();														// destructor
+namespace tictactoe {
 
-	/* overloading operator */
-	friend ostream&			operator << (ostream& cOut,
-										const CRow& cRow);			// extraction operator
-	int						operator [] (unsigned int nIndex);		// index operator
-	CRow&					operator = (const CRow& cRow);			// assignment operator
-
-	/* methods */
-	void					Display() const;						// display data
-
-	void					CopyData(const CRow& cRow);				// copy data
-
-	/* inline functions */
-	// get rows
-	inline int* GetRow() const
+	class CRow
 	{
-		return m_pRow;
-	}
+	public:
+		/* constructor/destructor */
+		CRow();															// constructor
+		CRow(unsigned int uSize);										// constructor
+		CRow(const CRow& cRow);											// copy constructor
+		~CRow();														// destructor
 
-	// set rows
-	inline void SetRow(int* const pRow)
-	{
-		m_pRow = pRow;
-	}
+		/* overloading operator */
+		friend ostream&			operator << (ostream& cOut,
+											const CRow& cRow);			// extraction operator
+		int						operator [] (unsigned int nIndex);		// index operator
+		CRow&					operator = (const CRow& cRow);			// assignment operator
 
-	// get size
-	inline unsigned int GetSize() const
-	{
-		return m_uCols;
-	}
+		/* methods */
+		void					Display() const;						// display data
 
-	// set size
-	inline void SetSize(const unsigned int uSize)
-	{
-		m_uCols = uSize;
-	}
+		void					CopyData(const CRow& cRow);				// copy data
 
-	// get item at index
-	inline int GetAt(const unsigned int uIndex) const
-	{
-		return IsValid() && uIndex < GetSize() ? m_pRow[uIndex] : -1;
-	}
+		/* inline functions */
+		// get rows
+		inline int* GetRow() const
+		{
+			return m_pRow;
+		}
 
-	// set value at index
-	inline void SetAt(const unsigned int uIndex,
-		const int nValue)
-	{
-		if (IsValid() && uIndex < GetSize())
-			m_pRow[uIndex] = nValue;
-	}
+		// set rows
+		inline void SetRow(int* const pRow)
+		{
+			m_pRow = pRow;
+		}
 
-private:
-	void					InitRow();								// initialize memory
-	void					ReleaseRow();							// free memory
-	void					Display(ostream& cOut) const;			// display the data
+		// get size
+		inline unsigned int GetSize() const
+		{
+			return m_uCols;
+		}
 
-	// check for valid pointer
-	inline bool IsValid() const
-	{
-		return m_pRow != NULL ? true : false;
-	}
+		// set size
+		inline void SetSize(const unsigned int uSize)
+		{
+			m_uCols = uSize;
+		}
 
-private:
-	unsigned int m_uCols;											// number of items in one row
-	int* m_pRow;													// row of board
-};
+		// get item at index
+		inline int GetAt(const unsigned int uIndex) const
+		{
+			return IsValid() && uIndex < GetSize() ? m_pRow[uIndex] : -1;
+		}
 
+		// set value at index
+		inline void SetAt(const unsigned int uIndex,
+			const int nValue)
+		{
+			if (IsValid() && uIndex < GetSize())
+				m_pRow[uIndex] = nValue;
+		}
+
+	private:
+		void					InitRow();								// initialize memory
+		void					ReleaseRow();							// free memory
+		void					Display(ostream& cOut) const;			// display the data
+
+		// check for valid pointer
+		inline bool IsValid() const
+		{
+			return m_pRow != NULL ? true : false;
+		}
+
+	private:
+		unsigned int m_uCols;											// number of items in one row
+		int* m_pRow;													// row of board
+	};
+}

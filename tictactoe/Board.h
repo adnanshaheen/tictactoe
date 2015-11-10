@@ -4,94 +4,96 @@
 #include <iostream>
 using namespace std;
 
-class CRow;
+namespace tictactoe {
 
-class CBoard
-{
-public:
-	CBoard();
-	CBoard(unsigned int uRows, unsigned int uCols);
-	CBoard(const CBoard& cBoard);
-	~CBoard();
+	class CRow;
 
-	/* overloading operator */
-	friend ostream&			operator << (ostream& cOut,
-										const CBoard& cBoard);	// extraction operator
-	CRow*					operator [] (unsigned int nIndex);	// index operator
-	CBoard&					operator = (const CBoard& cBoard);	// assignment operator
-
-	/* methods */
-	void					Display() const;					// display data
-
-	void					InitData();							// initialize data
-
-	int GetAt(const unsigned int uRow,
-		const unsigned int uCol) const;							// get item at index row's column
-
-	void SetAt(const unsigned int uRow,
-		const unsigned int uCol,
-		const int nValue);										// set value at index row's column
-
-	/* inline functions */
-	// get rows
-	inline int GetRows() const
+	class CBoard
 	{
-		return m_uRows;
-	}
+	public:
+		CBoard();
+		CBoard(unsigned int uRows, unsigned int uCols);
+		CBoard(const CBoard& cBoard);
+		~CBoard();
 
-	// set rows
-	inline void SetRows(const unsigned int uRows)
-	{
-		m_uRows = uRows;
-	}
+		/* overloading operator */
+		friend ostream&			operator << (ostream& cOut,
+											const CBoard& cBoard);	// extraction operator
+		CRow*					operator [] (unsigned int nIndex);	// index operator
+		CBoard&					operator = (const CBoard& cBoard);	// assignment operator
 
-	// get cols
-	inline int GetCols() const
-	{
-		return m_uCols;
-	}
+		/* methods */
+		void					Display() const;					// display data
 
-	// set cols
-	inline void SetCols(const unsigned int uCols)
-	{
-		m_uCols = uCols;
-	}
+		void					InitData();							// initialize data
 
-	// get item at index
-	inline CRow* GetAt(const unsigned int uRow) const
-	{
-		return IsValid() ? m_ppRow[uRow] : NULL;
-	}
+		int GetAt(const unsigned int uRow,
+			const unsigned int uCol) const;							// get item at index row's column
 
-	// set item at index
-	inline void SetAt(const unsigned int uRow, CRow* const pRow)
-	{
-		if (IsValid())
-			m_ppRow[uRow] = pRow;
-	}
+		void SetAt(const unsigned int uRow,
+			const unsigned int uCol,
+			const int nValue);										// set value at index row's column
 
-private:
-	void					Init();								 // initialize memory
-	void					Release();							 // free memory
-	void					Display(ostream& cOut) const;		 // display the data
+		/* inline functions */
+		// get rows
+		inline int GetRows() const
+		{
+			return m_uRows;
+		}
 
-	void					CopyData(const CBoard& cBoard);		 // copy the data
+		// set rows
+		inline void SetRows(const unsigned int uRows)
+		{
+			m_uRows = uRows;
+		}
 
-	// check for valid pointer
-	inline bool IsValid() const
-	{
-		return m_ppRow != NULL ? true : false;
-	}
+		// get cols
+		inline int GetCols() const
+		{
+			return m_uCols;
+		}
 
-	// check for index valid pointer
-	inline bool IsValid(const unsigned int uRow) const
-	{
-		return IsValid() && m_ppRow[uRow] != NULL ? true : false;
-	}
+		// set cols
+		inline void SetCols(const unsigned int uCols)
+		{
+			m_uCols = uCols;
+		}
 
-private:
-	unsigned int m_uRows;										 // number of rows
-	unsigned int m_uCols;										 // number of cols
-	CRow** m_ppRow;												 // rows
-};
+		// get item at index
+		inline CRow* GetAt(const unsigned int uRow) const
+		{
+			return IsValid() ? m_ppRow[uRow] : NULL;
+		}
 
+		// set item at index
+		inline void SetAt(const unsigned int uRow, CRow* const pRow)
+		{
+			if (IsValid())
+				m_ppRow[uRow] = pRow;
+		}
+
+	private:
+		void					Init();								 // initialize memory
+		void					Release();							 // free memory
+		void					Display(ostream& cOut) const;		 // display the data
+
+		void					CopyData(const CBoard& cBoard);		 // copy the data
+
+		// check for valid pointer
+		inline bool IsValid() const
+		{
+			return m_ppRow != NULL ? true : false;
+		}
+
+		// check for index valid pointer
+		inline bool IsValid(const unsigned int uRow) const
+		{
+			return IsValid() && m_ppRow[uRow] != NULL ? true : false;
+		}
+
+	private:
+		unsigned int m_uRows;										 // number of rows
+		unsigned int m_uCols;										 // number of cols
+		CRow** m_ppRow;												 // rows
+	};
+}

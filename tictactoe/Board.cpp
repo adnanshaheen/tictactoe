@@ -2,6 +2,8 @@
 #include "Board.h"
 #include "Row.h"
 
+using namespace tictactoe;
+
 CBoard::CBoard() : m_ppRow(NULL), m_uRows(0), m_uCols(0)
 {
 }
@@ -108,7 +110,7 @@ void CBoard::InitData()
 			SetAt(uRow, uCol, nIndex ++);
 }
 
-ostream& operator << (ostream& cOut, const CBoard& cBoard)
+ostream& tictactoe::operator << (ostream& cOut, const CBoard& cBoard)
 {
 	cBoard.Display(cOut);
 	return cOut;

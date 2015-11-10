@@ -1,5 +1,6 @@
 
 #include "Row.h"
+using namespace tictactoe;
 
 CRow::CRow() : m_pRow(NULL), m_uCols(0)
 {
@@ -78,7 +79,7 @@ void CRow::Display(ostream& cOut) const
 	cOut << endl;
 }
 
-ostream& operator << (ostream& cOut, const CRow& cRow)
+ostream& tictactoe::operator << (ostream& cOut, const CRow& cRow)
 {
 	cRow.Display(cOut);
 	return cOut;

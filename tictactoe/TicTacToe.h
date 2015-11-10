@@ -5,49 +5,51 @@
 #include "Deck.h"
 using namespace std;
 
-class CPlayer;
+namespace tictactoe {
 
-class CTicTacToe
-{
-public:
-	CTicTacToe();
-	CTicTacToe(const CTicTacToe& cTicTacToe);
-	~CTicTacToe();
+	class CPlayer;
 
-	CTicTacToe& operator = (const CTicTacToe& cTicTacToe);
+	class CTicTacToe
+	{
+	public:
+		CTicTacToe();
+		CTicTacToe(const CTicTacToe& cTicTacToe);
+		~CTicTacToe();
 
-	friend ostream& operator << (ostream& cOut, const CTicTacToe& cTicTacToe);
-	friend istream& operator >> (istream& cIn, CTicTacToe& cTicTacToe);
+		CTicTacToe& operator = (const CTicTacToe& cTicTacToe);
 
-	void Input();
+		friend ostream& operator << (ostream& cOut, const CTicTacToe& cTicTacToe);
+		friend istream& operator >> (istream& cIn, CTicTacToe& cTicTacToe);
 
-	void Display() const;
+		void Input();
 
-	int StartGame();
+		void Display() const;
 
-private:
-	void Init();
-	void Release();
+		int StartGame();
 
-	void Input(istream& cIn);
+	private:
+		void Init();
+		void Release();
 
-	void Display(ostream& cOut) const;
+		void Input(istream& cIn);
 
-	bool IsValidMove(int nIndex) const;
+		void Display(ostream& cOut) const;
 
-	bool ValidateInput(istream& cIn, int nMove) const;
+		bool IsValidMove(int nIndex) const;
 
-	bool IsDraw() const;
+		bool ValidateInput(istream& cIn, int nMove) const;
 
-	bool IsGameOver() const;
+		bool IsDraw() const;
 
-	void GetPlayerMove();
+		bool IsGameOver() const;
 
-private:
-	bool m_bXO;					// current symbol
-	bool m_bSymbolX;			// symbol for first player
-	CDeck* m_pDeck;
-	CPlayer* m_pPlayerOne;
-	CPlayer* m_pPlayerTwo;
-};
+		void GetPlayerMove();
 
+	private:
+		bool m_bXO;					// current symbol
+		bool m_bSymbolX;			// symbol for first player
+		CDeck* m_pDeck;
+		CPlayer* m_pPlayerOne;
+		CPlayer* m_pPlayerTwo;
+	};
+}

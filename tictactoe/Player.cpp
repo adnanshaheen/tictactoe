@@ -2,6 +2,8 @@
 #include <string>
 #include "Player.h"
 
+using namespace tictactoe;
+
 CPlayer::CPlayer() : m_bSymbolXO(true)
 {
 }
@@ -68,13 +70,13 @@ void CPlayer::Display(ostream& cOut) const
 	cOut << m_cStatistics << endl;
 }
 
-ostream& operator << (ostream& cOut, const CPlayer& cPlayer)
+ostream& tictactoe::operator << (ostream& cOut, const CPlayer& cPlayer)
 {
 	cPlayer.Display(cOut);
 	return cOut;
 }
 
-istream& operator >> (istream& cIn, CPlayer& cPlayer)
+istream& tictactoe::operator >> (istream& cIn, CPlayer& cPlayer)
 {
 	cIn >> cPlayer.m_csName;
 	return cIn;
