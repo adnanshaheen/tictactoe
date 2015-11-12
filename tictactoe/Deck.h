@@ -3,14 +3,14 @@
 
 
 #include <iostream>
-#include <vector>
+#include <list>
 #include "Board.h"
 
 using namespace std;
 
 namespace tictactoe {
 
-	typedef vector<int> PLAYER_CHOICES;
+	typedef list<int> PLAYER_CHOICES;
 
 	class CDeck
 	{
