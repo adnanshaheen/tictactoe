@@ -21,7 +21,8 @@ CDeck::~CDeck()
 
 CDeck::CDeck(const CDeck& cDeck) : m_nBoardSize(3)
 {
-	m_pBoard = cDeck.m_pBoard;
+	m_pBoard = new CBoard();
+	*m_pBoard = *cDeck.m_pBoard;
 	ClearChoices();
 	m_cPlayerOChoice = cDeck.m_cPlayerOChoice;
 	m_cPlayerXChoice = cDeck.m_cPlayerXChoice;
@@ -30,7 +31,7 @@ CDeck::CDeck(const CDeck& cDeck) : m_nBoardSize(3)
 CDeck& CDeck::operator = (const CDeck& cDeck)
 {
 	if (this != &cDeck) {
-		m_pBoard = cDeck.m_pBoard;
+		*m_pBoard = *cDeck.m_pBoard;
 		ClearChoices();
 		m_cPlayerOChoice = cDeck.m_cPlayerOChoice;
 		m_cPlayerXChoice = cDeck.m_cPlayerXChoice;

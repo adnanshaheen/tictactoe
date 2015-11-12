@@ -8,6 +8,9 @@ using namespace std;
 namespace tictactoe {
 
 	class CPlayer;
+	typedef list<CDeck*> DECK_LIST;
+	typedef DECK_LIST::iterator DeckIter;
+	typedef DECK_LIST::const_iterator cDeckIter;
 
 	class CTicTacToe
 	{
@@ -31,6 +34,9 @@ namespace tictactoe {
 		void Init();
 		void Release();
 
+		void InitList(DECK_LIST cDeckList);
+		void ReleaseList();
+
 		void Input(istream& cIn);
 
 		void Display(ostream& cOut) const;
@@ -48,8 +54,9 @@ namespace tictactoe {
 	private:
 		bool m_bXO;					// current symbol
 		bool m_bSymbolX;			// symbol for first player
-		CDeck* m_pDeck;
-		CPlayer* m_pPlayerOne;
-		CPlayer* m_pPlayerTwo;
+		CDeck* m_pDeck;				// Current Deck
+		DECK_LIST m_cDeckList;		// Deck list
+		CPlayer* m_pPlayerOne;		// Player one
+		CPlayer* m_pPlayerTwo;		// Player two
 	};
 }

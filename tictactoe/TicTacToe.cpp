@@ -11,6 +11,7 @@ CTicTacToe::CTicTacToe() throw()
 	m_bSymbolX = true;
 	m_bXO = true;
 	Init();
+	m_cDeckList.push_back(m_pDeck);
 }
 
 CTicTacToe::~CTicTacToe()
@@ -26,10 +27,11 @@ CTicTacToe::~CTicTacToe()
 CTicTacToe::CTicTacToe(const CTicTacToe& cTicTacToe) throw()
 {
 	Init();
+	InitList(cTicTacToe.m_cDeckList);
 	m_bXO = cTicTacToe.m_bXO;
 	m_bSymbolX = cTicTacToe.m_bSymbolX;
-	m_pPlayerOne = cTicTacToe.m_pPlayerOne;
-	m_pPlayerTwo = cTicTacToe.m_pPlayerTwo;
+	*m_pPlayerOne = *cTicTacToe.m_pPlayerOne;
+	*m_pPlayerTwo = *cTicTacToe.m_pPlayerTwo;
 }
 
 CTicTacToe& CTicTacToe::operator = (const CTicTacToe& cTicTacToe)
@@ -37,10 +39,11 @@ CTicTacToe& CTicTacToe::operator = (const CTicTacToe& cTicTacToe)
 	try {
 		if (this != &cTicTacToe) {
 			Init();
+			InitList(cTicTacToe.m_cDeckList);
 			m_bXO = cTicTacToe.m_bXO;
 			m_bSymbolX = cTicTacToe.m_bSymbolX;
-			m_pPlayerOne = cTicTacToe.m_pPlayerOne;
-			m_pPlayerTwo = cTicTacToe.m_pPlayerTwo;
+			*m_pPlayerOne = *cTicTacToe.m_pPlayerOne;
+			*m_pPlayerTwo = *cTicTacToe.m_pPlayerTwo;
 		}
 	}
 	catch (exception e)
@@ -84,9 +87,9 @@ void CTicTacToe::Init()
 void CTicTacToe::Release()
 {
 	try {
-		if (m_pDeck) {
-			delete m_pDeck;
-			m_pDeck = NULL;
+		if (!m_cDeckList.empty()) {
+			ReleaseList();
+			m_cDeckList.clear();
 		}
 		if (m_pPlayerOne) {
 			delete m_pPlayerOne;
@@ -95,6 +98,51 @@ void CTicTacToe::Release()
 		if (m_pPlayerTwo) {
 			delete m_pPlayerTwo;
 			m_pPlayerTwo = NULL;
+		}
+	}
+	catch (exception e) {
+		cerr << e.what() << endl;
+		throw e;
+	}
+	catch (...) {
+		cerr << "Something went wrong while releasing data" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+		throw;
+	}
+}
+
+void CTicTacToe::InitList(DECK_LIST cDeckList)
+{
+	try {
+		DeckIter Iter;
+		for (Iter = cDeckList.begin(); Iter != cDeckList.end(); ++ Iter) {
+			if (*Iter) {
+				CDeck* pDeck =  new CDeck(**Iter);
+				m_cDeckList.push_back(pDeck);
+			}
+		}
+	}
+	catch (exception e) {
+		cerr << e.what() << endl;
+		throw e;
+	}
+	catch (...) {
+		cerr << "Something went wrong while releasing data" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+		throw;
+	}
+}
+
+void CTicTacToe::ReleaseList()
+{
+	try {
+		cDeckIter cIter;
+		for (cIter = m_cDeckList.begin(); cIter != m_cDeckList.end(); ++ cIter) {
+			CDeck* pDeck = *cIter;
+			if (pDeck)
+				delete pDeck;
 		}
 	}
 	catch (exception e) {
@@ -162,6 +210,25 @@ void CTicTacToe::Input(istream& cIn)
 
 void CTicTacToe::Display(ostream& cOut) const
 {
+	try {
+		cDeckIter cIter;
+		for (cIter = m_cDeckList.begin(); cIter != m_cDeckList.end(); ++ cIter) {
+			CDeck* pDeck = *cIter;
+			if (pDeck)
+				cout << *pDeck << endl;
+		}
+	}
+	catch (exception e) {
+		cerr << e.what() << endl;
+		throw e;
+	}
+	catch (...)
+	{
+		cerr << "Something bad happened!!!" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+		throw;
+	}
 }
 
 bool CTicTacToe::IsValidMove(int nIndex) const
