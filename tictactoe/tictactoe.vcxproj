@@ -53,6 +53,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -80,6 +81,7 @@
   <ItemGroup>
     <ClInclude Include="Board.h" />
     <ClInclude Include="Deck.h" />
+    <ClInclude Include="File.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Row.h" />
     <ClInclude Include="Stats.h" />
@@ -88,6 +90,7 @@
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Deck.cpp" />
+    <ClCompile Include="File.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Row.cpp" />
