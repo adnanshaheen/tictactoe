@@ -161,7 +161,7 @@ bool CDeck::PlayerOWins() const
 
 bool CDeck::IsGameOver() const
 {
-	return m_cPlayerXChoice.size() + m_cPlayerOChoice.size() == GetBoardSize() - 1;
+	return m_cPlayerXChoice.size() + m_cPlayerOChoice.size() == GetBoardSize();
 }
 
 ostream& tictactoe::operator << (ostream& cOut, const CDeck& cDeck)
