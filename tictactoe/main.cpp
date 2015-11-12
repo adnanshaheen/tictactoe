@@ -9,6 +9,13 @@ using namespace tictactoe;
 
 int main()
 {
-	CTicTacToe cTicTacToe;
-	return cTicTacToe.StartGame();
+	int nRes = 0;
+	try {
+		CTicTacToe cTicTacToe;
+		nRes = cTicTacToe.StartGame();
+	}
+	catch (exception)
+	{
+	}
+	return nRes;
 }

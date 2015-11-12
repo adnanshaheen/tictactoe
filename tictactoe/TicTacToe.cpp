@@ -6,8 +6,10 @@
 
 using namespace tictactoe;
 
-CTicTacToe::CTicTacToe() : m_bSymbolX(true), m_bXO(true)
+CTicTacToe::CTicTacToe() throw()
 {
+	m_bSymbolX = true;
+	m_bXO = true;
 	Init();
 }
 
@@ -39,10 +41,21 @@ CTicTacToe& CTicTacToe::operator = (const CTicTacToe& cTicTacToe)
 
 void CTicTacToe::Init()
 {
-	Release();
-	m_pDeck = new CDeck();
-	m_pPlayerOne = new CPlayer();
-	m_pPlayerTwo = new CPlayer();
+	try {
+		Release();
+		m_pDeck = new CDeck();
+		m_pPlayerOne = new CPlayer();
+		m_pPlayerTwo = new CPlayer();
+	}
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+		throw e;
+	}
+	catch (...)
+	{
+		cerr << "Something bad happened!!!" << endl;
+	}
 }
 
 void CTicTacToe::Release()
