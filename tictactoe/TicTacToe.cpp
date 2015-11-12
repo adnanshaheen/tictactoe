@@ -181,6 +181,9 @@ int CTicTacToe::StartGame()
 			cout << "Game Draw :\\" << endl;
 			m_pPlayerOne->SetTies();
 			m_pPlayerTwo->SetTies();
+
+			pWinner = m_pPlayerOne;
+			pLooser = m_pPlayerTwo;
 		}
 
 		cout << *pWinner;
