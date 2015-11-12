@@ -15,10 +15,15 @@ CTicTacToe::CTicTacToe() throw()
 
 CTicTacToe::~CTicTacToe()
 {
-	Release();
+	try {
+		Release();
+	}
+	catch (...) {
+		// Can't throw you dear :)
+	}
 }
 
-CTicTacToe::CTicTacToe(const CTicTacToe& cTicTacToe)
+CTicTacToe::CTicTacToe(const CTicTacToe& cTicTacToe) throw()
 {
 	Init();
 	m_bXO = cTicTacToe.m_bXO;
@@ -29,13 +34,28 @@ CTicTacToe::CTicTacToe(const CTicTacToe& cTicTacToe)
 
 CTicTacToe& CTicTacToe::operator = (const CTicTacToe& cTicTacToe)
 {
-	if (this != &cTicTacToe) {
-		Init();
-		m_bXO = cTicTacToe.m_bXO;
-		m_bSymbolX = cTicTacToe.m_bSymbolX;
-		m_pPlayerOne = cTicTacToe.m_pPlayerOne;
-		m_pPlayerTwo = cTicTacToe.m_pPlayerTwo;
+	try {
+		if (this != &cTicTacToe) {
+			Init();
+			m_bXO = cTicTacToe.m_bXO;
+			m_bSymbolX = cTicTacToe.m_bSymbolX;
+			m_pPlayerOne = cTicTacToe.m_pPlayerOne;
+			m_pPlayerTwo = cTicTacToe.m_pPlayerTwo;
+		}
 	}
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+		throw e;
+	}
+	catch (...)
+	{
+		cerr << "Something bad happened!!!" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+		throw;
+	}
+
 	return *this;
 }
 
@@ -55,60 +75,89 @@ void CTicTacToe::Init()
 	catch (...)
 	{
 		cerr << "Something bad happened!!!" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+		throw;
 	}
 }
 
 void CTicTacToe::Release()
 {
-	if (m_pDeck) {
-		delete m_pDeck;
-		m_pDeck = NULL;
+	try {
+		if (m_pDeck) {
+			delete m_pDeck;
+			m_pDeck = NULL;
+		}
+		if (m_pPlayerOne) {
+			delete m_pPlayerOne;
+			m_pPlayerOne = NULL;
+		}
+		if (m_pPlayerTwo) {
+			delete m_pPlayerTwo;
+			m_pPlayerTwo = NULL;
+		}
 	}
-	if (m_pPlayerOne) {
-		delete m_pPlayerOne;
-		m_pPlayerOne = NULL;
+	catch (exception e) {
+		cerr << e.what() << endl;
+		throw e;
 	}
-	if (m_pPlayerTwo) {
-		delete m_pPlayerTwo;
-		m_pPlayerTwo = NULL;
+	catch (...) {
+		cerr << "Something went wrong while releasing data" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+		throw;
 	}
 }
 
-void CTicTacToe::Input()
+void CTicTacToe::Input() throw()
 {
 	Input(cin);
 }
 
-void CTicTacToe::Display() const
+void CTicTacToe::Display() const throw()
 {
 	Display(cout);
 }
 
 void CTicTacToe::Input(istream& cIn)
 {
-	int nIndex = -1;
-	string csName;
-	if (m_bXO) {
-		csName = m_pPlayerOne->IsSymbolX() ?
-			m_pPlayerOne->GetPlayerName() : m_pPlayerTwo->GetPlayerName();
-	}
-	else {
-		csName = m_pPlayerOne->IsSymbolO() ?
-			m_pPlayerOne->GetPlayerName() : m_pPlayerTwo->GetPlayerName();
-	}
+	try {
+		int nIndex = -1;
+		string csName;
+		if (m_bXO) {
+			csName = m_pPlayerOne->IsSymbolX() ?
+				m_pPlayerOne->GetPlayerName() : m_pPlayerTwo->GetPlayerName();
+		}
+		else {
+			csName = m_pPlayerOne->IsSymbolO() ?
+				m_pPlayerOne->GetPlayerName() : m_pPlayerTwo->GetPlayerName();
+		}
 
-	cout << csName << " enter your move ";
-	while (true) {
-		cIn >> nIndex;
-		if (!ValidateInput(cIn, nIndex))
-			continue;
+		cout << csName << " enter your move ";
+		while (true) {
+			cIn >> nIndex;
+			if (!ValidateInput(cIn, nIndex))
+				continue;
 
-		if (!IsValidMove(nIndex))
-			cout << "Invalid move ..." << endl;
-		else
-			break;
+			if (!IsValidMove(nIndex))
+				cout << "Invalid move ..." << endl;
+			else
+				break;
+		}
+		m_pDeck->InsertChoice(m_bXO, nIndex);
 	}
-	m_pDeck->InsertChoice(m_bXO, nIndex);
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+		throw e;
+	}
+	catch (...)
+	{
+		cerr << "Something bad happened!!!" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+		throw;
+	}
 }
 
 void CTicTacToe::Display(ostream& cOut) const
@@ -117,8 +166,24 @@ void CTicTacToe::Display(ostream& cOut) const
 
 bool CTicTacToe::IsValidMove(int nIndex) const
 {
-	return m_pDeck->IsMoveAvailable(nIndex) &&
+	bool bRes = false;
+	try {
+		bRes = m_pDeck->IsMoveAvailable(nIndex) &&
 		(nIndex >= 0 && nIndex < m_pDeck->GetBoardSize() ? true : false);
+	}
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+		throw e;
+	}
+	catch (...)
+	{
+		cerr << "Something bad happened!!!" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+		throw;
+	}
+	return bRes;
 }
 
 bool CTicTacToe::ValidateInput(istream& cIn, int nMove) const
@@ -134,108 +199,197 @@ bool CTicTacToe::ValidateInput(istream& cIn, int nMove) const
 
 int CTicTacToe::StartGame()
 {
-	int res = 0;
+	int nRes = 0;
 	bool bSamePlayer = false;
 	char ch = 'Y';
 	CPlayer* pWinner = NULL;
 	CPlayer* pLooser = NULL;
 
-	while (ch != 'q') {
+	try {
+		while (ch != 'q') {
 
-		pWinner = NULL;
-		pLooser = NULL;
+			pWinner = NULL;
+			pLooser = NULL;
 
-		if (!bSamePlayer) {
-			cout << "Player 1 name: ";
-			cin >> *m_pPlayerOne;
-		}
-		m_pPlayerOne->SetSymbol(m_bSymbolX);
-		cout << *m_pPlayerOne;
+			if (!bSamePlayer) {
+				cout << "Player 1 name: ";
+				cin >> *m_pPlayerOne;
+			}
+			m_pPlayerOne->SetSymbol(m_bSymbolX);
+			cout << *m_pPlayerOne;
 
-		m_bXO = true;
-		m_bSymbolX = !m_bSymbolX;				// change the symbol for next player, and game
+			m_bXO = true;
+			m_bSymbolX = !m_bSymbolX;				// change the symbol for next player, and game
 
-		if (!bSamePlayer) {
-			cout << "Player 2 name: ";
-			cin >> *m_pPlayerTwo;
-		}
-		m_pPlayerTwo->SetSymbol(m_bSymbolX);
-		cout << *m_pPlayerTwo;
+			if (!bSamePlayer) {
+				cout << "Player 2 name: ";
+				cin >> *m_pPlayerTwo;
+			}
+			m_pPlayerTwo->SetSymbol(m_bSymbolX);
+			cout << *m_pPlayerTwo;
 
-		m_pDeck->ClearBoard();					// clear board for new game
-
-		cout << *m_pDeck;
-
-		cout << (m_pPlayerOne->IsSymbolX() ? m_pPlayerOne->GetPlayerName() : m_pPlayerTwo->GetPlayerName())
-			<< " to make the first move" << endl;
-
-		while (!IsGameOver()) {
-			GetPlayerMove();
+			m_pDeck->ClearBoard();					// clear board for new game
 
 			cout << *m_pDeck;
-		}
 
-		if (!IsDraw()) {
-			if (m_pDeck->PlayerXWins()) {
-				pWinner = m_pPlayerOne->IsSymbolX() ? m_pPlayerOne : m_pPlayerTwo;
-				pLooser = m_pPlayerOne->IsSymbolO() ? m_pPlayerOne : m_pPlayerTwo;
-			}
-			else if (m_pDeck->PlayerOWins()) {
-				pWinner = m_pPlayerOne->IsSymbolO() ? m_pPlayerOne : m_pPlayerTwo;
-				pLooser = m_pPlayerOne->IsSymbolX() ? m_pPlayerOne : m_pPlayerTwo;
+			cout << (m_pPlayerOne->IsSymbolX() ? m_pPlayerOne->GetPlayerName() : m_pPlayerTwo->GetPlayerName())
+				<< " to make the first move" << endl;
+
+			while (!IsGameOver()) {
+				GetPlayerMove();
+
+				cout << *m_pDeck;
 			}
 
-			cout << pWinner->GetPlayerName() << " Wins :)" << endl;
+			if (!IsDraw()) {
+				if (m_pDeck->PlayerXWins()) {
+					pWinner = m_pPlayerOne->IsSymbolX() ? m_pPlayerOne : m_pPlayerTwo;
+					pLooser = m_pPlayerOne->IsSymbolO() ? m_pPlayerOne : m_pPlayerTwo;
+				}
+				else if (m_pDeck->PlayerOWins()) {
+					pWinner = m_pPlayerOne->IsSymbolO() ? m_pPlayerOne : m_pPlayerTwo;
+					pLooser = m_pPlayerOne->IsSymbolX() ? m_pPlayerOne : m_pPlayerTwo;
+				}
 
-			pWinner->SetWins();
-			pLooser->SetLosses();
+				cout << pWinner->GetPlayerName() << " Wins :)" << endl;
+
+				pWinner->SetWins();
+				pLooser->SetLosses();
+			}
+			else {
+				cout << "Game Draw :\\" << endl;
+				m_pPlayerOne->SetTies();
+				m_pPlayerTwo->SetTies();
+
+				pWinner = m_pPlayerOne;
+				pLooser = m_pPlayerTwo;
+			}
+
+			cout << *pWinner;
+			cout << *pLooser;
+
+			cout << "Same players (press q to exit)? Y/N ";
+			cin >> ch;
+			if (ch == 'y' || ch == 'Y')
+				bSamePlayer = true;
+			else
+				bSamePlayer = false;
 		}
-		else {
-			cout << "Game Draw :\\" << endl;
-			m_pPlayerOne->SetTies();
-			m_pPlayerTwo->SetTies();
-
-			pWinner = m_pPlayerOne;
-			pLooser = m_pPlayerTwo;
-		}
-
-		cout << *pWinner;
-		cout << *pLooser;
-
-		cout << "Same players (press q to exit)? Y/N ";
-		cin >> ch;
-		if (ch == 'y' || ch == 'Y')
-			bSamePlayer = true;
 	}
-	return res;
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+		throw e;
+	}
+	catch (...)
+	{
+		cerr << "Something bad happened!!!" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+		throw;
+	}
+
+	return nRes;
 }
 
 bool CTicTacToe::IsDraw() const
 {
-	return !m_pDeck->PlayerXWins() && !m_pDeck->PlayerOWins();
+	bool bRes = false;
+	try {
+		bRes = !m_pDeck->PlayerXWins() && !m_pDeck->PlayerOWins();
+	}
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+		throw e;
+	}
+	catch (...)
+	{
+		cerr << "Something bad happened!!!" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+		throw;
+	}
+	return bRes;
 }
 
 bool CTicTacToe::IsGameOver() const
 {
-	return m_pDeck->IsGameOver() || m_pDeck->PlayerXWins() || m_pDeck->PlayerOWins();
+	bool bRes = false;
+	try {
+		bRes = m_pDeck->IsGameOver() || m_pDeck->PlayerXWins() || m_pDeck->PlayerOWins();
+	}
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+		throw e;
+	}
+	catch (...)
+	{
+		cerr << "Something bad happened!!!" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+		throw;
+	}
+	return bRes;
 }
 
 void CTicTacToe::GetPlayerMove()
 {
-	cin >> *this;
+	try {
+		cin >> *this;
 
-	// update player move
-	m_bXO  = !m_bXO;
+		// update player move
+		m_bXO  = !m_bXO;
+	}
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+		throw e;
+	}
+	catch (...)
+	{
+		cerr << "Something bad happened!!!" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+		throw;
+	}
 }
 
 ostream& tictactoe::operator << (ostream& cOut, const CTicTacToe& cTicTacToe)
 {
-	cTicTacToe.Display(cOut);
+	try {
+		cTicTacToe.Display(cOut);
+	}
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+	}
+	catch (...)
+	{
+		cerr << "Something bad happened!!!" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+	}
+
 	return cOut;
 }
 
 istream& tictactoe::operator >> (istream& cIn, CTicTacToe& cTicTacToe)
 {
-	cTicTacToe.Input(cIn);
+	try {
+		cTicTacToe.Input(cIn);
+	}
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+	}
+	catch (...)
+	{
+		cerr << "Something bad happened!!!" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+	}
+
 	return cIn;
 }

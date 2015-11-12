@@ -12,7 +12,7 @@ namespace tictactoe {
 	class CTicTacToe
 	{
 	public:
-		CTicTacToe();
+		CTicTacToe() throw();
 		CTicTacToe(const CTicTacToe& cTicTacToe);
 		~CTicTacToe();
 
@@ -21,9 +21,9 @@ namespace tictactoe {
 		friend ostream& operator << (ostream& cOut, const CTicTacToe& cTicTacToe);
 		friend istream& operator >> (istream& cIn, CTicTacToe& cTicTacToe);
 
-		void Input();
+		void Input() throw();
 
-		void Display() const;
+		void Display() const throw();
 
 		int StartGame();
 
