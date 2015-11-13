@@ -1,11 +1,36 @@
 
-#include <Windows.h>
+#include <tchar.h>
+
 #include "File.h"
 
 using namespace tictactoe;
 
 CFile::CFile() : m_hFile(NULL)
 {
+	TCHAR szModulePath[MAX_PATH] = { 0 };
+	try {
+		if (!GetModuleFileName(NULL, szModulePath, MAX_PATH))
+			throw;
+
+		m_csFilePath = szModulePath;
+		m_csFilePath = m_csFilePath.substr(0, m_csFilePath.rfind(_T(".")));
+		m_csFilePath += _T(".txt");
+
+		CreateFile(GENERIC_READ | GENERIC_WRITE,
+			NULL,
+			OPEN_ALWAYS,
+			FILE_ATTRIBUTE_NORMAL);
+	}
+	catch (exception e) {
+		cerr << e.what() << endl;
+		throw e;
+	}
+	catch (...) {
+		cerr << "Something bad happened!!!" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+		throw;
+	}
 }
 
 CFile::CFile(wstring csFilePath)
@@ -32,7 +57,13 @@ int CFile::CreateFile(DWORD dwDesiredAccess,
 	// Make sure that the file is closed.
 	CloseFile();
 
-	m_hFile = ::CreateFile(m_csFilePath.c_str(), dwDesiredAccess, dwShareMode, NULL, dwCreationDisposition, dwFlagsAndAttributes, NULL);
+	m_hFile = ::CreateFile(m_csFilePath.c_str(),
+							dwDesiredAccess,
+							dwShareMode,
+							NULL,
+							dwCreationDisposition,
+							dwFlagsAndAttributes,
+							NULL);
 	m_hFile = (m_hFile == INVALID_HANDLE_VALUE) ? NULL: m_hFile;
 
 	if (!m_hFile)

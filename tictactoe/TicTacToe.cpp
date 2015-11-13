@@ -3,6 +3,7 @@
 
 #include "TicTacToe.h"
 #include "Player.h"
+#include "File.h"
 
 using namespace tictactoe;
 
@@ -11,7 +12,6 @@ CTicTacToe::CTicTacToe() throw()
 	m_bSymbolX = true;
 	m_bXO = true;
 	Init();
-	m_cDeckList.push_back(m_pDeck);
 }
 
 CTicTacToe::~CTicTacToe()
@@ -66,9 +66,9 @@ void CTicTacToe::Init()
 {
 	try {
 		Release();
-		m_pDeck = new CDeck();
 		m_pPlayerOne = new CPlayer();
 		m_pPlayerTwo = new CPlayer();
+		m_pFile = new CFile();
 	}
 	catch (exception e)
 	{
@@ -118,7 +118,7 @@ void CTicTacToe::InitList(DECK_LIST cDeckList)
 		DeckIter Iter;
 		for (Iter = cDeckList.begin(); Iter != cDeckList.end(); ++ Iter) {
 			if (*Iter) {
-				CDeck* pDeck =  new CDeck(**Iter);
+				CDeck* pDeck = new CDeck(**Iter);
 				m_cDeckList.push_back(pDeck);
 			}
 		}
@@ -277,6 +277,8 @@ int CTicTacToe::StartGame()
 
 			pWinner = NULL;
 			pLooser = NULL;
+			m_pDeck = new CDeck();					// NOTE: Don't delete me
+			m_cDeckList.push_back(m_pDeck);
 
 			if (!bSamePlayer) {
 				cout << "Player 1 name: ";
