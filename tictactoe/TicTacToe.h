@@ -7,7 +7,6 @@ using namespace std;
 
 namespace tictactoe {
 
-	class CFile;
 	class CPlayer;
 	typedef list<CDeck*> DECK_LIST;
 	typedef DECK_LIST::iterator DeckIter;
@@ -59,6 +58,5 @@ namespace tictactoe {
 		DECK_LIST m_cDeckList;		// Deck list
 		CPlayer* m_pPlayerOne;		// Player one
 		CPlayer* m_pPlayerTwo;		// Player two
-		CFile* m_pFile;				// File object
 	};
 }

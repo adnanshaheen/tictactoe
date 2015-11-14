@@ -1,9 +1,9 @@
 
 #include <string>
+#include <fstream>
 
 #include "TicTacToe.h"
 #include "Player.h"
-#include "File.h"
 
 using namespace tictactoe;
 
@@ -68,7 +68,6 @@ void CTicTacToe::Init()
 		Release();
 		m_pPlayerOne = new CPlayer();
 		m_pPlayerTwo = new CPlayer();
-		m_pFile = new CFile();
 	}
 	catch (exception e)
 	{
@@ -181,8 +180,8 @@ void CTicTacToe::Input(istream& cIn)
 				m_pPlayerOne->GetPlayerName() : m_pPlayerTwo->GetPlayerName();
 		}
 
-		cout << csName << " enter your move ";
 		while (true) {
+			cout << csName << " enter your move ";
 			cIn >> nIndex;
 			if (!ValidateInput(cIn, nIndex))
 				continue;
@@ -272,6 +271,8 @@ int CTicTacToe::StartGame()
 	CPlayer* pWinner = NULL;
 	CPlayer* pLooser = NULL;
 
+	ofstream cFile("tictactoe.txt", ios::out | ios::app);
+
 	try {
 		while (ch != 'q') {
 
@@ -322,11 +323,18 @@ int CTicTacToe::StartGame()
 
 				cout << pWinner->GetPlayerName() << " Wins :)" << endl;
 
+				if (!cFile.bad())
+					cFile << pWinner->GetPlayerName() << " Wins :)" << endl;
+
 				pWinner->SetWins();
 				pLooser->SetLosses();
 			}
 			else {
 				cout << "Game Draw :\\" << endl;
+
+				if (!cFile.bad())
+					cFile << "Game Draw :\\" << endl;
+
 				m_pPlayerOne->SetTies();
 				m_pPlayerTwo->SetTies();
 
@@ -336,6 +344,13 @@ int CTicTacToe::StartGame()
 
 			cout << *pWinner;
 			cout << *pLooser;
+
+			if (!cFile.bad()) {
+				cFile << m_cDeckList.size() << endl;
+				cFile << *m_pDeck;
+
+				cFile.flush();
+			}
 
 			cout << "Same players (press q to exit)? Y/N ";
 			cin >> ch;
@@ -357,6 +372,8 @@ int CTicTacToe::StartGame()
 		cerr << "Line: " << __LINE__ << endl;
 		throw;
 	}
+
+	cFile.close();
 
 	return nRes;
 }
