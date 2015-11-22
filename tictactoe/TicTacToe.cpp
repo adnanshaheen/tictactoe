@@ -1,4 +1,12 @@
+/**
+ * TicTacToe.cpp
+ *
+ * Implementation details of class
+ */
 
+/**
+ * Headers
+ */
 #include <string>
 #include <fstream>
 
@@ -7,6 +15,13 @@
 
 using namespace tictactoe;
 
+/**
+ * Constructor
+ *
+ * Default Constructor, set initial symbol
+ * Create two players using CPlayer*
+ * Throws any exception raised
+ */
 CTicTacToe::CTicTacToe() throw()
 {
 	m_bSymbolX = true;
@@ -14,6 +29,13 @@ CTicTacToe::CTicTacToe() throw()
 	Init();
 }
 
+/**
+ * Destructor
+ *
+ * Destructor, Release the memory allocated
+ *
+ * Catches any exception
+ */
 CTicTacToe::~CTicTacToe()
 {
 	try {
@@ -24,6 +46,15 @@ CTicTacToe::~CTicTacToe()
 	}
 }
 
+/**
+ * Copy Constructor
+ *
+ * @params: cTicTacToe, to copy from
+ *
+ * Creates a new copy of object
+ * Initialize all data members using cTicTacToe
+ * Throws any exception raised
+ */
 CTicTacToe::CTicTacToe(const CTicTacToe& cTicTacToe) throw()
 {
 	Init();
@@ -34,6 +65,14 @@ CTicTacToe::CTicTacToe(const CTicTacToe& cTicTacToe) throw()
 	*m_pPlayerTwo = *cTicTacToe.m_pPlayerTwo;
 }
 
+/**
+ * Assignment operator
+ *
+ * @params: cTicTacToe, to copy data from
+ *
+ * Initialize all data members using cTicTacToe
+ * Catches exception, and throws them back to caller
+ */
 CTicTacToe& CTicTacToe::operator = (const CTicTacToe& cTicTacToe)
 {
 	try {
@@ -62,6 +101,18 @@ CTicTacToe& CTicTacToe::operator = (const CTicTacToe& cTicTacToe)
 	return *this;
 }
 
+/**
+ * Init
+ *
+ * return: void
+ *
+ * @params: none
+ *
+ * Release any memory if created
+ * Create two new CPlayer
+ *
+ * Catches and Throws any exception raised
+ */
 void CTicTacToe::Init()
 {
 	try {
@@ -83,6 +134,19 @@ void CTicTacToe::Init()
 	}
 }
 
+/**
+ * Release
+ *
+ * return: void
+ *
+ * @params: none
+ *
+ * Release any memory if created
+ * Delete all members from deck list
+ * Delete CPlayer
+ *
+ * Catches and Throws any exception raised
+ */
 void CTicTacToe::Release()
 {
 	try {
@@ -111,6 +175,17 @@ void CTicTacToe::Release()
 	}
 }
 
+/**
+ * InitList
+ *
+ * return: void
+ *
+ * @params: cDeckList list of deck
+ *
+ * Copy the cDeckList
+ *
+ * Catches and Throws any exception raised
+ */
 void CTicTacToe::InitList(DECK_LIST cDeckList)
 {
 	try {
@@ -134,6 +209,17 @@ void CTicTacToe::InitList(DECK_LIST cDeckList)
 	}
 }
 
+/**
+ * ReleaseList
+ *
+ * return: void
+ *
+ * @params: none
+ *
+ * Release all deck from list
+ *
+ * Catches and Throws any exception raised
+ */
 void CTicTacToe::ReleaseList()
 {
 	try {
@@ -156,16 +242,49 @@ void CTicTacToe::ReleaseList()
 	}
 }
 
+/**
+ * Input
+ *
+ * return: void
+ *
+ * @params: none
+ *
+ * Take user input for next move
+ *
+ * Throws any exception raised
+ */
 void CTicTacToe::Input() throw()
 {
 	Input(cin);
 }
 
+/**
+ * Display
+ *
+ * return: void
+ *
+ * @params: none
+ *
+ * Display all the decks in list
+ *
+ * Throws any exception raised
+ */
 void CTicTacToe::Display() const throw()
 {
 	Display(cout);
 }
 
+/**
+ * Input
+ *
+ * return: void
+ *
+ * @params: cIn
+ *
+ * Get user input using cIn
+ *
+ * Catches and Throws any exception raised
+ */
 void CTicTacToe::Input(istream& cIn)
 {
 	try {
@@ -207,6 +326,17 @@ void CTicTacToe::Input(istream& cIn)
 	}
 }
 
+/**
+ * Display
+ *
+ * return: void
+ *
+ * @params: cOut
+ *
+ * Display the deck in list on cOut
+ *
+ * Catches and Throws any exception raised
+ */
 void CTicTacToe::Display(ostream& cOut) const
 {
 	try {
@@ -230,6 +360,18 @@ void CTicTacToe::Display(ostream& cOut) const
 	}
 }
 
+/**
+ * IsValidMove
+ *
+ * return: bool
+ *
+ * @params: nIndex
+ *
+ * Check if nIndex is already taken in Deck
+ * Check if nIndex is valid for Deck
+ *
+ * Catches and Throws any exception raised
+ */
 bool CTicTacToe::IsValidMove(int nIndex) const
 {
 	bool bRes = false;
@@ -252,17 +394,57 @@ bool CTicTacToe::IsValidMove(int nIndex) const
 	return bRes;
 }
 
+/**
+ * ValidateInput
+ *
+ * return: bool
+ *
+ * @params: cIn
+ * @params: nMove
+ *
+ * Validate if nMove is an integer
+ *
+ * Catches and Throws any exception raised
+ */
 bool CTicTacToe::ValidateInput(istream& cIn, int nMove) const
 {
-	if (cIn.fail() || nMove < 0) {
-		cIn.clear();
-		cIn.ignore(numeric_limits<streamsize>::max(), '\n');
-		cout << "Invalid input! Try again ..." << endl;
-		return false;
+	bool bRes = true;
+	try {
+		if (cIn.fail() || nMove < 0) {
+			cIn.clear();
+			cIn.ignore(numeric_limits<streamsize>::max(), '\n');
+			cout << "Invalid input! Try again ..." << endl;
+			return false;
+		}
 	}
-	return true;
+	catch (exception e) {
+		cerr << e.what() << endl;
+		throw e;
+	}
+	catch (...) {
+		cerr << "Something bad happened!!!" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+		throw;
+	}
+
+	return bRes;
 }
 
+/**
+ * StartGame
+ *
+ * return: int
+ *
+ * @params: none
+ *
+ * Start the game
+ * Get player names, assign their symbols
+ * Take user input and display the current Deck status
+ * Change symbol for next game, dump deck to a file at the end of game
+ *
+ * Catches and Throws any exception raised
+ */
 int CTicTacToe::StartGame()
 {
 	int nRes = 0;
@@ -378,6 +560,17 @@ int CTicTacToe::StartGame()
 	return nRes;
 }
 
+/**
+ * IsDraw
+ *
+ * return: bool
+ *
+ * @params: none
+ *
+ * Check if game is a draw or not
+ *
+ * Catches and Throws any exception raised
+ */
 bool CTicTacToe::IsDraw() const
 {
 	bool bRes = false;
@@ -399,6 +592,17 @@ bool CTicTacToe::IsDraw() const
 	return bRes;
 }
 
+/**
+ * IsGameOver
+ *
+ * return: bool
+ *
+ * @params: none
+ *
+ * Check if game is over or not
+ *
+ * Catches and Throws any exception raised
+ */
 bool CTicTacToe::IsGameOver() const
 {
 	bool bRes = false;
@@ -420,6 +624,17 @@ bool CTicTacToe::IsGameOver() const
 	return bRes;
 }
 
+/**
+ * GetPlayerMove
+ *
+ * return: void
+ *
+ * @params: none
+ *
+ * Get player input, set who's next
+ *
+ * Catches and Throws any exception raised
+ */
 void CTicTacToe::GetPlayerMove()
 {
 	try {
@@ -442,6 +657,18 @@ void CTicTacToe::GetPlayerMove()
 	}
 }
 
+/**
+ * operator <<
+ *
+ * return: ostream
+ *
+ * @params: cOut
+ * @params: cTicTacToe
+ *
+ * display the deck list
+ *
+ * Catches and Throws any exception raised
+ */
 ostream& tictactoe::operator << (ostream& cOut, const CTicTacToe& cTicTacToe)
 {
 	try {
@@ -461,6 +688,18 @@ ostream& tictactoe::operator << (ostream& cOut, const CTicTacToe& cTicTacToe)
 	return cOut;
 }
 
+/**
+ * operator >>
+ *
+ * return: istream
+ *
+ * @params: cIn
+ * @params: cTicTacToe
+ *
+ * Take user input
+ *
+ * Catches and Throws any exception raised
+ */
 istream& tictactoe::operator >> (istream& cIn, CTicTacToe& cTicTacToe)
 {
 	try {

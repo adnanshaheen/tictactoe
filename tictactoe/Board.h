@@ -1,34 +1,50 @@
+/**
+ * Board.h
+ *
+ * Author:      Adnan Shaheen
+ * Description: Responsible to display and keep board
+ */
 
 #pragma once
 
+/**
+ * Headers
+ */
 #include <iostream>
 using namespace std;
 
 namespace tictactoe {
 
+	/**
+	 * Forward declarations
+	 */
 	class CRow;
 
+	/**
+	 * CBoard class
+	 */
 	class CBoard
 	{
 	public:
-		CBoard();
-		CBoard(unsigned int uRows, unsigned int uCols);
-		CBoard(const CBoard& cBoard);
-		~CBoard();
+		/** Constructors/Destructors */
+		CBoard() throw();											// Ctor
+		CBoard(unsigned int uRows, unsigned int uCols) throw();		// Ctor, args
+		CBoard(const CBoard& cBoard) throw();						// Copy Ctor
+		~CBoard();													// Destructor
 
 		/* overloading operator */
 		friend ostream&			operator << (ostream& cOut,
 											const CBoard& cBoard);	// extraction operator
-		CRow*					operator [] (unsigned int nIndex);	// index operator
+		CRow*					operator [] (unsigned int nIndex) throw();	// index operator
 		CBoard&					operator = (const CBoard& cBoard);	// assignment operator
 
 		/* methods */
-		void					Display() const;					// display data
+		void					Display() const throw();			// display data
 
 		void					InitData();							// initialize data
 
 		int GetAt(const unsigned int uRow,
-			const unsigned int uCol) const;							// get item at index row's column
+			const unsigned int uCol) const throw();					// get item at index row's column
 
 		void SetAt(const unsigned int uRow,
 			const unsigned int uCol,

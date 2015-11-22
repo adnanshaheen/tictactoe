@@ -1,29 +1,42 @@
+/**
+ * Board.h
+ *
+ * Author:      Adnan Shaheen
+ * Description: Responsible to create and work on int array
+ */
 
 #pragma once
+
+/**
+ * Headers
+ */
 #include <iostream>
 using namespace std;
 
 namespace tictactoe {
 
+	/**
+	 * CBoard class
+	 */
 	class CRow
 	{
 	public:
-		/* constructor/destructor */
-		CRow();															// constructor
-		CRow(unsigned int uSize);										// constructor
-		CRow(const CRow& cRow);											// copy constructor
+		/** constructor/destructor */
+		CRow() throw();													// constructor
+		CRow(unsigned int uSize) throw();								// constructor
+		CRow(const CRow& cRow) throw();									// copy constructor
 		~CRow();														// destructor
 
 		/* overloading operator */
-		friend ostream&			operator << (ostream& cOut,
-											const CRow& cRow);			// extraction operator
-		int						operator [] (unsigned int nIndex);		// index operator
-		CRow&					operator = (const CRow& cRow);			// assignment operator
+		friend ostream&		operator << (ostream& cOut,
+										const CRow& cRow);				// extraction operator
+		int					operator [] (unsigned int nIndex) throw();	// index operator
+		CRow&				operator = (const CRow& cRow);				// assignment operator
 
 		/* methods */
-		void					Display() const;						// display data
+		void				Display() const throw();					// display data
 
-		void					CopyData(const CRow& cRow);				// copy data
+		void				CopyData(const CRow& cRow);					// copy data
 
 		/* inline functions */
 		// get rows

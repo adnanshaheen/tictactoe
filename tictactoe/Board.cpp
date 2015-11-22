@@ -1,20 +1,52 @@
+/**
+ * Board.cpp
+ *
+ * Implementation details of CBoard class
+ */
 
+/**
+ * Headers
+ */
 #include "Board.h"
 #include "Row.h"
 
 using namespace tictactoe;
 
-CBoard::CBoard() : m_ppRow(NULL), m_uRows(0), m_uCols(0)
+/**
+ * Constructor
+ *
+ * Default Constructor
+ *
+ * Throws any exception raised
+ */
+CBoard::CBoard() throw() : m_ppRow(NULL), m_uRows(0), m_uCols(0)
 {
 }
 
-CBoard::CBoard(unsigned int uRows, unsigned int uCols) : m_uRows(uRows), m_uCols(uCols)
+/**
+ * Constructor
+ *
+ * Create uRow number of Rows
+ *
+ * Throws any exception raised
+ */
+CBoard::CBoard(unsigned int uRows, unsigned int uCols) throw() : m_uRows(uRows), m_uCols(uCols)
 {
 	Init();
 	InitData();
 }
 
-CBoard::CBoard(const CBoard& cBoard)
+/**
+ * Copy Constructor
+ *
+ * @param: cBoard, to copy from
+ *
+ * Creates a new copy of object
+ * Initialize all data members using cBoard
+ *
+ * Throws any exception raised
+ */
+CBoard::CBoard(const CBoard& cBoard) throw()
 {
 	SetRows(cBoard.GetRows());
 	SetCols(cBoard.GetCols());
@@ -24,94 +56,344 @@ CBoard::CBoard(const CBoard& cBoard)
 	}
 }
 
+/**
+ * Destructor
+ *
+ * Destructor, Release memory created by CRows
+ *
+ * Catches any exception
+ */
 CBoard::~CBoard()
 {
-	Release();
+	try {
+		Release();
+	}
+	catch (...) {
+		// never throw exception from destructor
+	}
 }
 
-CRow* CBoard::operator [] (unsigned int nIndex)
+/**
+ * operator []
+ *
+ * return: CRow*, one complete array
+ *
+ * @param: nIndex
+ *
+ * Find the CRow* at nIndex, and return it
+ *
+ * Throws any exception
+ */
+CRow* CBoard::operator [] (unsigned int nIndex) throw()
 {
 	return GetAt(nIndex);
 }
 
+/**
+ * operator =
+ *
+ * return: CBoard&
+ *
+ * @param: cBoard, to copy data from
+ *
+ * Initialize all data members using cBoard
+ *
+ * Catches and throws any exception
+ */
 CBoard& CBoard::operator = (const CBoard& cBoard)
 {
-	if (this != &cBoard) {
-		SetRows(cBoard.GetRows());
-		SetCols(cBoard.GetCols());
-		if (cBoard.IsValid()) {
-			Init();
-			CopyData(cBoard);
+	try {
+		if (this != &cBoard) {
+			SetRows(cBoard.GetRows());
+			SetCols(cBoard.GetCols());
+			if (cBoard.IsValid()) {
+				Init();
+				CopyData(cBoard);
+			}
 		}
 	}
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+		throw e;
+	}
+	catch (...)
+	{
+		cerr << "Something bad happened!!!" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+		throw;
+	}
+
 	return *this;
 }
 
-void CBoard::Display() const
+/**
+ * Display
+ *
+ * return: void
+ *
+ * @param: none
+ *
+ * Display current board layout
+ *
+ * Throws any exception raised
+ */
+void CBoard::Display() const throw()
 {
 	Display(cout);
 }
 
+/**
+ * Init
+ *
+ * return: void
+ *
+ * @param: none
+ *
+ * Release any memory if created
+ * Create Arrays of CRows
+ *
+ * Catches and Throws any exception raised
+ */
 void CBoard::Init()
 {
-	Release();
-	m_ppRow = new CRow* [GetRows()];
-	for (int nIndex = 0; nIndex < GetRows(); ++ nIndex)
-		m_ppRow[nIndex] = new CRow(GetCols());
+	try {
+		Release();
+		m_ppRow = new CRow* [GetRows()];
+		for (int nIndex = 0; nIndex < GetRows(); ++ nIndex)
+			m_ppRow[nIndex] = new CRow(GetCols());
+	}
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+		throw e;
+	}
+	catch (...)
+	{
+		cerr << "Something bad happened!!!" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+		throw;
+	}
 }
 
+/**
+ * Release
+ *
+ * return: void
+ *
+ * @param: none
+ *
+ * Release any memory if created
+ * Delete all CRows
+ *
+ * Catches and Throws any exception raised
+ */
 void CBoard::Release()
 {
-	if (IsValid()) {
-		for (int nIndex = 0; nIndex < GetRows(); ++ nIndex) {
-			if (IsValid(nIndex))
-				delete m_ppRow[nIndex];
+	try {
+		if (IsValid()) {
+			for (int nIndex = 0; nIndex < GetRows(); ++ nIndex) {
+				if (IsValid(nIndex))
+					delete m_ppRow[nIndex];
+			}
+			delete[] m_ppRow;
 		}
-		delete[] m_ppRow;
+	}
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+		throw e;
+	}
+	catch (...)
+	{
+		cerr << "Something bad happened!!!" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+		throw;
 	}
 }
 
+/**
+ * Display
+ *
+ * return: void
+ *
+ * @param: cOut
+ *
+ * Display the CRows to make a board
+ *
+ * Catches and Throws any exception raised
+ */
 void CBoard::Display(ostream& cOut) const
 {
-	cOut << " -----------------" << endl;
-	for (int nIndex = 0; nIndex < GetRows(); ++ nIndex) {
-		if (IsValid(nIndex)) {
-			cOut << "|     |     |     |" << endl;
-			cOut << *m_ppRow[nIndex];
-			cOut << "|     |     |     |" << endl;
-			cOut << " -----------------" << endl;
+	try {
+		cOut << " -----------------" << endl;
+		for (int nIndex = 0; nIndex < GetRows(); ++ nIndex) {
+			if (IsValid(nIndex)) {
+				cOut << "|     |     |     |" << endl;
+				cOut << *m_ppRow[nIndex];
+				cOut << "|     |     |     |" << endl;
+				cOut << " -----------------" << endl;
+			}
 		}
+	}
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+		throw e;
+	}
+	catch (...)
+	{
+		cerr << "Something bad happened!!!" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+		throw;
 	}
 }
 
-int CBoard::GetAt(const unsigned int uRow, const unsigned int uCol) const
+/**
+ * GetAt
+ *
+ * return: int
+ *
+ * @param: uRow
+ * @param: uCol
+ *
+ * return the item at uRow and uCol
+ *
+ * Throws any exception raised
+ */
+int CBoard::GetAt(const unsigned int uRow, const unsigned int uCol) const throw()
 {
 	return IsValid(uRow) ? m_ppRow[uRow]->GetAt(uCol) : -1;
 }
 
+/**
+ * SetAt
+ *
+ * return: void
+ *
+ * @param: uRow
+ * @param: uCol
+ * @param: nValue
+ *
+ * Set the nValue at uRow, uCol position
+ *
+ * Catches and Throws any exception raised
+ */
 void CBoard::SetAt(const unsigned int uRow, const unsigned int uCol, const int nValue)
 {
-	if (IsValid(uRow))
-		m_ppRow[uRow]->SetAt(uCol, nValue);
+	try {
+		if (IsValid(uRow))
+			m_ppRow[uRow]->SetAt(uCol, nValue);
+	}
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+		throw e;
+	}
+	catch (...)
+	{
+		cerr << "Something bad happened!!!" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+		throw;
+	}
 }
 
+/**
+ * CopyData
+ *
+ * return: void
+ *
+ * @param: cBoard
+ *
+ * Copy the data from board
+ *
+ * Catches and Throws any exception raised
+ */
 void CBoard::CopyData(const CBoard& cBoard)
 {
-	for (int nIndex = 0; nIndex < cBoard.GetRows(); ++ nIndex)
-		GetAt(nIndex)->CopyData(*cBoard.GetAt(nIndex));
+	try {
+		for (int nIndex = 0; nIndex < cBoard.GetRows(); ++ nIndex)
+			GetAt(nIndex)->CopyData(*cBoard.GetAt(nIndex));
+	}
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+		throw e;
+	}
+	catch (...)
+	{
+		cerr << "Something bad happened!!!" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+		throw;
+	}
 }
 
-
+/**
+ * InitData
+ *
+ * return: void
+ *
+ * @param: none
+ *
+ * Initialize the data for board
+ *
+ * Catches and Throws any exception raised
+ */
 void CBoard::InitData()
 {
-	int nIndex = 48;		// initialize with ascii value of 0
-	for (int uRow = 0; uRow < GetRows(); ++ uRow)
-		for (int uCol = 0; uCol < GetCols(); ++ uCol)
-			SetAt(uRow, uCol, nIndex ++);
+	try {
+		int nIndex = 48;		// initialize with ascii value of 0
+		for (int uRow = 0; uRow < GetRows(); ++ uRow)
+			for (int uCol = 0; uCol < GetCols(); ++ uCol)
+				SetAt(uRow, uCol, nIndex ++);
+	}
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+		throw e;
+	}
+	catch (...)
+	{
+		cerr << "Something bad happened!!!" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+		throw;
+	}
 }
 
+/**
+ * operator <<
+ *
+ * return: ostream
+ *
+ * @param: cOut
+ *
+ * Display the board
+ *
+ * Catches and Throws any exception raised
+ */
 ostream& tictactoe::operator << (ostream& cOut, const CBoard& cBoard)
 {
-	cBoard.Display(cOut);
+	try {
+		cBoard.Display(cOut);
+	}
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+		throw e;
+	}
+	catch (...)
+	{
+		cerr << "Something bad happened!!!" << endl;
+		cerr << "File: " << __FILE__ << endl;
+		cerr << "Line: " << __LINE__ << endl;
+		throw;
+	}
 	return cOut;
 }

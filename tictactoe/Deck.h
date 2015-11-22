@@ -1,7 +1,15 @@
+/**
+ * Deck.h
+ *
+ * Author:      Adnan Shaheen
+ * Description: Responsible to display Deck, and keep players choices
+ */
 
 #pragma once
 
-
+/**
+ * Headers
+ */
 #include <iostream>
 #include <list>
 #include "Board.h"
@@ -10,14 +18,20 @@ using namespace std;
 
 namespace tictactoe {
 
+	/**
+	 * Defining type
+	 */
 	typedef list<int> PLAYER_CHOICES;
 
+	/**
+	 * CDeck class
+	 */
 	class CDeck
 	{
 	public:
 		/* constructor/destructor */
-		CDeck();														// constructor
-		CDeck(const CDeck& cDeck);										// copy constructor
+		CDeck() throw();												// constructor
+		CDeck(const CDeck& cDeck) throw();								// copy constructor
 		~CDeck();														// destructor
 
 		/* operator overloading */
@@ -26,7 +40,7 @@ namespace tictactoe {
 									const CDeck& cDeck);				// extraction operator
 
 		/* methods */
-		void		Display() const;									// display
+		void		Display() const throw();							// display
 
 		void		InsertChoice(bool bSymbol, unsigned int nIndex);	// insert choice
 
@@ -34,12 +48,12 @@ namespace tictactoe {
 
 		int			GetBoardSize() const;								// get board size
 
-		bool		IsMoveAvailable(int nIndex) const;					// check if move is already done
+		bool		IsMoveAvailable(int nIndex) const throw();			// check if move is already done
 
 		bool		PlayerXWins() const;								// Player with symbol X wins game?
 		bool		PlayerOWins() const;								// Player with symbol O wins game?
 
-		bool		IsGameOver() const;									// Is game over?
+		bool		IsGameOver() const throw();							// Is game over?
 
 	private:
 		void		Display(ostream& cOut) const;						// display
@@ -52,5 +66,4 @@ namespace tictactoe {
 		PLAYER_CHOICES m_cPlayerOChoice;								// player one choices
 		PLAYER_CHOICES m_cPlayerXChoice;								// player two choices
 	};
-
 }
