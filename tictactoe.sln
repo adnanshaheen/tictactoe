@@ -1,7 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tictactoe", "tictactoe\tictactoe.vcxproj", "{96F3C0B8-0D7B-4DEA-9054-8F11A946D0C5}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TicTacToe", "tictactoe\tictactoe.vcxproj", "{96F3C0B8-0D7B-4DEA-9054-8F11A946D0C5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test", "Test\Test.vcxproj", "{4369E4C7-C63E-4A70-B93C-B4E296263A4D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{96F3C0B8-0D7B-4DEA-9054-8F11A946D0C5} = {96F3C0B8-0D7B-4DEA-9054-8F11A946D0C5}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,12 @@ Global
 		{96F3C0B8-0D7B-4DEA-9054-8F11A946D0C5}.Release|Win32.ActiveCfg = Release|Win32
 		{96F3C0B8-0D7B-4DEA-9054-8F11A946D0C5}.Release|Win32.Build.0 = Release|Win32
 		{96F3C0B8-0D7B-4DEA-9054-8F11A946D0C5}.Release|Win32.Deploy.0 = Release|Win32
+		{4369E4C7-C63E-4A70-B93C-B4E296263A4D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4369E4C7-C63E-4A70-B93C-B4E296263A4D}.Debug|Win32.Build.0 = Debug|Win32
+		{4369E4C7-C63E-4A70-B93C-B4E296263A4D}.Debug|Win32.Deploy.0 = Debug|Win32
+		{4369E4C7-C63E-4A70-B93C-B4E296263A4D}.Release|Win32.ActiveCfg = Release|Win32
+		{4369E4C7-C63E-4A70-B93C-B4E296263A4D}.Release|Win32.Build.0 = Release|Win32
+		{4369E4C7-C63E-4A70-B93C-B4E296263A4D}.Release|Win32.Deploy.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

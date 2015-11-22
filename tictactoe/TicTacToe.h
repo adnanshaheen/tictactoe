@@ -11,6 +11,8 @@
  */
 #include <iostream>
 #include "Deck.h"
+#include "ITicTacToe.h"
+
 using namespace std;
 
 namespace tictactoe {
@@ -26,7 +28,7 @@ namespace tictactoe {
 	/**
 	 * CTicTacToe class
 	 */
-	class CTicTacToe
+	class CTicTacToe : public ITicTacToe
 	{
 	public:
 		/** Constructors/Destructors */
@@ -43,7 +45,7 @@ namespace tictactoe {
 
 		void Display() const throw();							// Display all the decks in list
 
-		int StartGame();										// Initialize the game
+		virtual int StartGame();								// Initialize the game
 
 	private:
 		void Init();											// Init class members
